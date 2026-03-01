@@ -10,121 +10,151 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
-        }
-    }
-    </script>
+    <script
+        type="importmap">{"imports":{"three":"https://unpkg.com/three@0.154.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.154.0/examples/jsm/"}}</script>
     <style>
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box
         }
 
         body {
-            background: #020617;
+            background: #060b17;
             font-family: 'Outfit', sans-serif;
-            color: white;
-            overflow: hidden;
+            color: #fff;
+            overflow: hidden
         }
 
         canvas {
-            display: block;
+            display: block
         }
 
-        /* UI Overlay */
+        .glass {
+            background: rgba(10, 20, 40, .82);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(99, 179, 237, .14);
+            border-radius: 18px
+        }
+
         #ui-left {
             position: fixed;
-            top: 24px;
-            left: 24px;
+            top: 20px;
+            left: 20px;
             z-index: 20;
-            width: 280px;
+            width: 270px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-        }
-
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(99, 179, 237, 0.15);
-            border-radius: 20px;
-            padding: 18px 20px;
+            gap: 10px
         }
 
         .panel-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             letter-spacing: .2em;
             text-transform: uppercase;
             color: #60a5fa;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px
         }
 
-        .status-row {
+        .glass .inner {
+            padding: 16px 18px
+        }
+
+        .row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 10px;
-            margin-bottom: 8px;
+            padding: 7px 10px;
+            background: rgba(255, 255, 255, .04);
+            border-radius: 9px;
+            margin-bottom: 7px;
+            font-size: 12px
         }
 
-        .status-label {
-            font-size: 12px;
-            color: #94a3b8;
+        .row span:first-child {
+            color: #94a3b8
         }
 
-        .status-value {
-            font-size: 12px;
-            font-weight: 700;
+        .row span:last-child {
             font-family: 'JetBrains Mono', monospace;
+            font-weight: 700
         }
 
-        .status-value.idle {
-            color: #94a3b8;
+        .idle {
+            color: #64748b
         }
 
-        .status-value.moving {
+        .run {
             color: #facc15;
-            animation: blink 1s ease infinite;
+            animation: blink 1s infinite
         }
 
-        .status-value.done {
-            color: #34d399;
+        .ok {
+            color: #34d399
         }
 
-        .status-value.placed {
-            color: #60a5fa;
+        .blue {
+            color: #60a5fa
         }
 
         @keyframes blink {
 
             0%,
             100% {
-                opacity: 1;
+                opacity: 1
             }
 
             50% {
-                opacity: 0.4;
+                opacity: .4
             }
         }
 
-        .btn-primary {
+        /* Zone grid */
+        .zone-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 10px
+        }
+
+        .zone-btn {
+            padding: 9px 4px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .04);
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all .2s;
+            text-align: center
+        }
+
+        .zone-btn:hover {
+            background: rgba(59, 130, 246, .2);
+            border-color: rgba(59, 130, 246, .4);
+            color: #93c5fd
+        }
+
+        .zone-btn.selected {
+            background: rgba(59, 130, 246, .3);
+            border-color: #3b82f6;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(59, 130, 246, .4)
+        }
+
+        .btn-main {
             width: 100%;
             padding: 12px;
             border: none;
             border-radius: 12px;
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
+            color: #fff;
             font-family: 'Outfit', sans-serif;
             font-size: 13px;
             font-weight: 700;
@@ -134,49 +164,50 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            margin-bottom: 8px
         }
 
-        .btn-primary:hover:not(:disabled) {
+        .btn-main:hover:not(:disabled) {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, .35)
         }
 
-        .btn-primary:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+        .btn-main:disabled {
+            opacity: .35;
+            cursor: not-allowed
         }
 
-        .btn-secondary {
+        .btn-sec {
             width: 100%;
             padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, .1);
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, .04);
             color: #94a3b8;
             font-family: 'Outfit', sans-serif;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all .2s;
+            transition: all .2s
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+        .btn-sec:hover {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
         }
 
-        .cam-btns {
+        .cam-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            gap: 6px
         }
 
         .cam-btn {
-            padding: 8px 4px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.04);
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: 9px;
+            background: rgba(255, 255, 255, .03);
             color: #64748b;
             font-size: 10px;
             font-weight: 700;
@@ -184,207 +215,184 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all .2s;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'JetBrains Mono', monospace
         }
 
         .cam-btn:hover,
-        .cam-btn.active {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.4);
-            color: #60a5fa;
+        .cam-btn.act {
+            background: rgba(59, 130, 246, .2);
+            border-color: rgba(59, 130, 246, .4);
+            color: #60a5fa
         }
 
-        /* Bottom info bar */
-        #info-bar {
+        /* Phase sidebar */
+        #phases {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-        }
-
-        .info-pill {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(99, 179, 237, 0.2);
-            border-radius: 999px;
-            padding: 12px 28px;
-            font-size: 13px;
-            color: #94a3b8;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .info-pill i {
-            color: #60a5fa;
-        }
-
-        #phase-indicator {
-            position: fixed;
-            top: 24px;
-            right: 24px;
+            top: 20px;
+            right: 20px;
             z-index: 20;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px
         }
 
-        .phase-step {
+        .ph {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 16px;
-            border-radius: 10px;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 9px;
+            background: rgba(10, 20, 40, .7);
+            border: 1px solid rgba(255, 255, 255, .05);
+            font-size: 11px;
             color: #475569;
             transition: all .4s;
+            white-space: nowrap
         }
 
-        .phase-step.active {
-            background: rgba(37, 99, 235, 0.25);
-            border-color: rgba(59, 130, 246, 0.4);
-            color: #93c5fd;
+        .ph.act {
+            background: rgba(37, 99, 235, .22);
+            border-color: rgba(59, 130, 246, .4);
+            color: #93c5fd
         }
 
-        .phase-step.done {
+        .ph.done {
             color: #34d399;
-            border-color: rgba(52, 211, 153, 0.3);
-            background: rgba(5, 46, 22, 0.3);
+            border-color: rgba(52, 211, 153, .25);
+            background: rgba(5, 46, 22, .25)
         }
 
-        .phase-dot {
-            width: 8px;
-            height: 8px;
+        .dot {
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: #334155;
+            background: #1e3a5f;
             flex-shrink: 0;
-            transition: all .4s;
+            transition: all .4s
         }
 
-        .phase-step.active .phase-dot {
+        .ph.act .dot {
             background: #3b82f6;
             box-shadow: 0 0 8px #3b82f6;
-            animation: blink 1s ease infinite;
+            animation: blink 1s infinite
         }
 
-        .phase-step.done .phase-dot {
-            background: #34d399;
+        .ph.done .dot {
+            background: #34d399
         }
 
-        #drag-hint {
+        /* Bottom info */
+        #info {
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(250, 204, 21, 0.15);
-            border: 1px solid rgba(250, 204, 21, 0.3);
+            z-index: 20
+        }
+
+        .pill {
+            background: rgba(10, 20, 40, .85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 179, 237, .2);
             border-radius: 999px;
-            padding: 8px 20px;
-            font-size: 12px;
-            color: #fde68a;
-            z-index: 20;
-            display: none;
+            padding: 11px 24px;
+            font-size: 13px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap
+        }
+
+        .pill i {
+            color: #60a5fa
         }
     </style>
 </head>
 
 <body>
-
-    <!-- Left UI Panel -->
+    <!-- LEFT PANEL -->
     <div id="ui-left">
-        <!-- Robot Info -->
-        <div class="glass-panel">
-            <div class="panel-title"><i class="fa-solid fa-robot"></i> UR3 Robot Arm</div>
-            <div class="status-row">
-                <span class="status-label">Status</span>
-                <span class="status-value idle" id="robot-status">IDLE</span>
-            </div>
-            <div class="status-row">
-                <span class="status-label">Phase</span>
-                <span class="status-value" id="robot-phase" style="color:#60a5fa">—</span>
-            </div>
-            <div class="status-row">
-                <span class="status-label">Box Placed</span>
-                <span class="status-value idle" id="box-status">No</span>
-            </div>
-            <div class="status-row">
-                <span class="status-label">Reach</span>
-                <span class="status-value" style="color:#a78bfa">500 mm</span>
+        <!-- Status -->
+        <div class="glass">
+            <div class="inner">
+                <div class="panel-title"><i class="fa-solid fa-robot"></i> UR3 Robot Arm</div>
+                <div class="row"><span>Status</span><span id="sts" class="idle">IDLE</span></div>
+                <div class="row"><span>Phase</span><span id="ph-cur" class="blue">—</span></div>
+                <div class="row"><span>Box</span><span id="box-sts" class="idle">ยังไม่วาง</span></div>
             </div>
         </div>
 
-        <!-- Controls -->
-        <div class="glass-panel">
-            <div class="panel-title"><i class="fa-solid fa-gamepad"></i> Controls</div>
-            <button class="btn-primary" id="btn-start" disabled>
-                <i class="fa-solid fa-play"></i> Start Pick & Place
-            </button>
-            <br>
-            <button class="btn-secondary" id="btn-reset">
-                <i class="fa-solid fa-rotate-left"></i> Reset
-            </button>
+        <!-- Zone selection -->
+        <div class="glass">
+            <div class="inner">
+                <div class="panel-title"><i class="fa-solid fa-table-cells"></i> เลือกตำแหน่งวางกล่อง</div>
+                <div class="zone-grid">
+                    <button class="zone-btn" id="z-A1" onclick="placeBox('A1')">A1</button>
+                    <button class="zone-btn" id="z-A2" onclick="placeBox('A2')">A2</button>
+                    <button class="zone-btn" id="z-A3" onclick="placeBox('A3')">A3</button>
+                    <button class="zone-btn" id="z-B1" onclick="placeBox('B1')">B1</button>
+                    <button class="zone-btn" id="z-B2" onclick="placeBox('B2')">B2</button>
+                    <button class="zone-btn" id="z-B3" onclick="placeBox('B3')">B3</button>
+                </div>
+                <button class="btn-main" id="btn-start" disabled>
+                    <i class="fa-solid fa-play"></i> Start Pick & Place
+                </button>
+                <button class="btn-sec" id="btn-reset">
+                    <i class="fa-solid fa-rotate-left"></i> Reset
+                </button>
+            </div>
         </div>
 
         <!-- Camera -->
-        <div class="glass-panel">
-            <div class="panel-title"><i class="fa-solid fa-video"></i> Camera View</div>
-            <div class="cam-btns">
-                <button class="cam-btn" onclick="setCamera('iso')">Iso</button>
-                <button class="cam-btn" onclick="setCamera('front')">Front</button>
-                <button class="cam-btn" onclick="setCamera('side')">Side</button>
-                <button class="cam-btn" onclick="setCamera('top')">Top</button>
+        <div class="glass">
+            <div class="inner">
+                <div class="panel-title"><i class="fa-solid fa-video"></i> Camera</div>
+                <div class="cam-grid">
+                    <button class="cam-btn act" id="cam-iso" onclick="setCamera('iso')">ISO</button>
+                    <button class="cam-btn" id="cam-front" onclick="setCamera('front')">FRONT</button>
+                    <button class="cam-btn" id="cam-side" onclick="setCamera('side')">SIDE</button>
+                    <button class="cam-btn" id="cam-top" onclick="setCamera('top')">TOP</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Phase Indicators -->
-    <div id="phase-indicator">
-        <div class="phase-step" id="ph-0">
-            <div class="phase-dot"></div>Approach
+    <!-- PHASE SIDEBAR -->
+    <div id="phases">
+        <div class="ph" id="p0">
+            <div class="dot"></div>① Approach — ยื่นแขนไปเหนือกล่อง
         </div>
-        <div class="phase-step" id="ph-1">
-            <div class="phase-dot"></div>Pick
+        <div class="ph" id="p1">
+            <div class="dot"></div>② Pick — โค้งลงดูดกล่อง
         </div>
-        <div class="phase-step" id="ph-2">
-            <div class="phase-dot"></div>Lift
+        <div class="ph" id="p2">
+            <div class="dot"></div>③ Lift — ยกกล่องขึ้น
         </div>
-        <div class="phase-step" id="ph-3">
-            <div class="phase-dot"></div>Transit
+        <div class="ph" id="p3">
+            <div class="dot"></div>④ Transit — เคลื่อนไปแท่นพับ
         </div>
-        <div class="phase-step" id="ph-4">
-            <div class="phase-dot"></div>Place
+        <div class="ph" id="p4">
+            <div class="dot"></div>⑤ Place & Fold — วางและพับกล่อง
         </div>
     </div>
 
-    <!-- Bottom Info Bar -->
-    <div id="info-bar">
-        <div class="info-pill" id="info-text">
-            <i class="fa-solid fa-mouse-pointer"></i>
-            <span>Click on the table to place the cardboard box</span>
-        </div>
+    <!-- BOTTOM INFO -->
+    <div id="info">
+        <div class="pill" id="info-txt"><i class="fa-solid fa-table-cells"></i><span>เลือกตำแหน่ง A1-B3
+                เพื่อวางกล่องกระดาษบนโต๊ะ</span></div>
     </div>
-    <div id="drag-hint">📦 Box selected — drag to reposition</div>
 
     <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        // ============================================================
-        // SCENE SETUP
-        // ============================================================
+        // ── SCENE ─────────────────────────────────────────────────────
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0e1a);
-        scene.fog = new THREE.FogExp2(0x0a0e1a, 0.012);
+        scene.background = new THREE.Color(0x060b17);
+        scene.fog = new THREE.FogExp2(0x060b17, 0.01);
 
-        const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.01, 200);
-        camera.position.set(1.5, 1.2, 1.8);
-        camera.lookAt(0, 0.5, 0);
-
+        const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, 0.01, 200);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(innerWidth, innerHeight);
         renderer.setPixelRatio(devicePixelRatio);
@@ -392,571 +400,411 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         document.body.appendChild(renderer.domElement);
 
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.08;
-        controls.target.set(0, 0.4, 0);
-        controls.minDistance = 0.5;
-        controls.maxDistance = 5;
+        const ctrl = new OrbitControls(camera, renderer.domElement);
+        ctrl.enableDamping = true; ctrl.dampingFactor = 0.08;
+        ctrl.target.set(0, 0.4, 0);
+        ctrl.minDistance = 0.4; ctrl.maxDistance = 6;
 
-        // ============================================================
-        // LIGHTING
-        // ============================================================
-        const ambient = new THREE.AmbientLight(0x1e293b, 2);
-        scene.add(ambient);
+        // ── LIGHTING ──────────────────────────────────────────────────
+        scene.add(new THREE.AmbientLight(0x162030, 2.5));
+        const sun = new THREE.DirectionalLight(0xd0e8ff, 3);
+        sun.position.set(2, 5, 2); sun.castShadow = true;
+        sun.shadow.mapSize.set(2048, 2048);
+        sun.shadow.camera.left = -3; sun.shadow.camera.right = 3;
+        sun.shadow.camera.top = 3; sun.shadow.camera.bottom = -3;
+        scene.add(sun);
+        scene.add(new THREE.DirectionalLight(0x4060bb, 0.6)).position.set(-2, 2, -2);
+        const robotLight = new THREE.PointLight(0x4080ff, 2, 4);
+        robotLight.position.set(0, 1.2, 0);
+        scene.add(robotLight);
 
-        // Main overhead factory light
-        const keyLight = new THREE.DirectionalLight(0xd4e8ff, 2.5);
-        keyLight.position.set(2, 4, 2);
-        keyLight.castShadow = true;
-        keyLight.shadow.mapSize.set(2048, 2048);
-        keyLight.shadow.camera.near = 0.5;
-        keyLight.shadow.camera.far = 20;
-        keyLight.shadow.camera.left = -3; keyLight.shadow.camera.right = 3;
-        keyLight.shadow.camera.top = 3; keyLight.shadow.camera.bottom = -3;
-        scene.add(keyLight);
+        // ── FLOOR + GRID ──────────────────────────────────────────────
+        const floor = new THREE.Mesh(
+            new THREE.PlaneGeometry(16, 16),
+            new THREE.MeshStandardMaterial({ color: 0x0a0e1a, roughness: .9 })
+        );
+        floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+        const grid = new THREE.GridHelper(16, 50, 0x1a3255, 0x111d30);
+        grid.position.y = 0.002; scene.add(grid);
 
-        const fillLight = new THREE.DirectionalLight(0x4466bb, 0.6);
-        fillLight.position.set(-2, 2, -2);
-        scene.add(fillLight);
-
-        // Blue accent robot light
-        const robotAccent = new THREE.PointLight(0x3b82f6, 1.5, 3);
-        robotAccent.position.set(0, 1, 0);
-        scene.add(robotAccent);
-
-        // ============================================================
-        // FLOOR & GRID
-        // ============================================================
-        const floorGeo = new THREE.PlaneGeometry(12, 12);
-        const floorMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.9, metalness: 0.1 });
-        const floor = new THREE.Mesh(floorGeo, floorMat);
-        floor.rotation.x = -Math.PI / 2;
-        floor.receiveShadow = true;
-        scene.add(floor);
-
-        const grid = new THREE.GridHelper(12, 40, 0x1e3a5f, 0x1e293b);
-        grid.position.y = 0.001;
-        scene.add(grid);
-
-        // ============================================================
-        // TABLE (120.2 × 121 cm = 1.202 × 1.21 m)
-        // ============================================================
-        const TABLE_W = 1.21;   // x
-        const TABLE_D = 1.202;  // z
-        const TABLE_H = 0.75;   // height
-        const TABLE_TOP = TABLE_H + 0.02; // top surface y
-
-        const tableMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6, metalness: 0.3 });
-        const tableTopMesh = new THREE.Mesh(new THREE.BoxGeometry(TABLE_W, 0.04, TABLE_D), tableMat);
-        tableTopMesh.position.set(0, TABLE_H + 0.02, 0);
-        tableTopMesh.receiveShadow = true;
-        tableTopMesh.castShadow = true;
-        scene.add(tableTopMesh);
-
-        // Edge highlight (thin emissive strip)
-        const edgeMat = new THREE.MeshBasicMaterial({ color: 0x1d4ed8 });
-        const edgeGeo = new THREE.BoxGeometry(TABLE_W + 0.002, 0.002, TABLE_D + 0.002);
-        const tableEdge = new THREE.Mesh(edgeGeo, edgeMat);
-        tableEdge.position.set(0, TABLE_H + 0.04, 0);
-        scene.add(tableEdge);
-
-        // Table Legs
-        const legMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.5, metalness: 0.6 });
-        const legPos = [
-            [-TABLE_W / 2 + 0.04, TABLE_H / 2, -TABLE_D / 2 + 0.04],
-            [TABLE_W / 2 - 0.04, TABLE_H / 2, -TABLE_D / 2 + 0.04],
-            [-TABLE_W / 2 + 0.04, TABLE_H / 2, TABLE_D / 2 - 0.04],
-            [TABLE_W / 2 - 0.04, TABLE_H / 2, TABLE_D / 2 - 0.04],
-        ];
-        legPos.forEach(p => {
-            const leg = new THREE.Mesh(new THREE.BoxGeometry(0.04, TABLE_H, 0.04), legMat);
-            leg.position.set(...p);
-            leg.castShadow = true;
-            scene.add(leg);
+        // ── TABLE (120.2 × 121 cm) ────────────────────────────────────
+        const TW = 1.21, TD = 1.202, TH = 0.72;
+        const TABLE_TOP = TH + 0.03;
+        const tMat = new THREE.MeshStandardMaterial({ color: 0x263344, roughness: .55, metalness: .35 });
+        const tTop = new THREE.Mesh(new THREE.BoxGeometry(TW, .04, TD), tMat);
+        tTop.position.set(0, TH + .02, 0); tTop.receiveShadow = true; tTop.castShadow = true;
+        scene.add(tTop);
+        // Blue glow edge
+        const edgeMesh = new THREE.Mesh(new THREE.BoxGeometry(TW + .003, .003, TD + .003), new THREE.MeshBasicMaterial({ color: 0x1d5fbd }));
+        edgeMesh.position.y = TH + .041; scene.add(edgeMesh);
+        // Legs
+        const legM = new THREE.MeshStandardMaterial({ color: 0x0d1826, metalness: .7, roughness: .4 });
+        [[-.57, .36, -.58], [.57, .36, -.58], [-.57, .36, .58], [.57, .36, .58]].forEach(p => {
+            const l = new THREE.Mesh(new THREE.BoxGeometry(.045, TH, .045), legM);
+            l.position.set(...p); l.castShadow = true; scene.add(l);
         });
 
-        // ============================================================
-        // FOLDING STATION (right side of table)
-        // ============================================================
-        const STATION_X = TABLE_W / 2 + 0.3;
-        const STATION_Y = TABLE_TOP;
+        // ── FOLDING STATION (right of table) ─────────────────────────
+        // Inspired by video: flat platform with side guides + pressing bar
+        const FOLD_X = TW / 2 + 0.38;
+        const FOLD_Y = TABLE_TOP;
+        const FOLD_Z = 0.0;
 
-        const stationBaseMat = new THREE.MeshStandardMaterial({ color: 0x1e3a5f, roughness: 0.7, metalness: 0.4 });
-        const stationBase = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.02, 0.45), stationBaseMat);
-        stationBase.position.set(STATION_X, STATION_Y, 0);
-        stationBase.receiveShadow = true;
-        scene.add(stationBase);
+        const foldMatBase = new THREE.MeshStandardMaterial({ color: 0x1a2c42, roughness: .7, metalness: .5 });
+        const foldMatGuide = new THREE.MeshStandardMaterial({ color: 0x1e4070, roughness: .5, metalness: .7 });
+        const foldMatAccent = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, emissive: 0x0ea5e9, emissiveIntensity: .3 });
 
-        // Station glow frame
-        const stationEdge = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.004, 0.46), new THREE.MeshBasicMaterial({ color: 0x0ea5e9 }));
-        stationEdge.position.set(STATION_X, STATION_Y + 0.012, 0);
-        scene.add(stationEdge);
+        // Base platform
+        const fBase = new THREE.Mesh(new THREE.BoxGeometry(.5, .025, .55), foldMatBase);
+        fBase.position.set(FOLD_X, FOLD_Y, FOLD_Z);
+        scene.add(fBase);
 
-        // Station label (small peg)
-        const peg = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.05, 8), new THREE.MeshStandardMaterial({ color: 0x0ea5e9, emissive: 0x0ea5e9, emissiveIntensity: 0.5 }));
-        peg.position.set(STATION_X, STATION_Y + 0.025, 0.2);
-        scene.add(peg);
+        // Side guides (left & right)
+        const gW = .02, gH = .12, gD = .55;
+        [-1, 1].forEach(s => {
+            const g = new THREE.Mesh(new THREE.BoxGeometry(gW, gH, gD), foldMatGuide);
+            g.position.set(FOLD_X + s * .24, FOLD_Y + gH / 2, FOLD_Z);
+            scene.add(g);
+        });
+        // Front & back guides
+        [-1, 1].forEach(s => {
+            const g = new THREE.Mesh(new THREE.BoxGeometry(.7, .08, .02), foldMatGuide);
+            g.position.set(FOLD_X, FOLD_Y + .04, FOLD_Z + s * .265);
+            scene.add(g);
+        });
+        // Pressing bar (top horizontal bar)
+        const pressBar = new THREE.Mesh(new THREE.BoxGeometry(.52, .025, .03), new THREE.MeshStandardMaterial({ color: 0x2563eb, metalness: .9, roughness: .2 }));
+        pressBar.position.set(FOLD_X, FOLD_Y + .14, FOLD_Z);
+        scene.add(pressBar);
+        // Bottom fold line marker (cyan glow strip)
+        const glowStrip = new THREE.Mesh(new THREE.BoxGeometry(.48, .003, .48), foldMatAccent);
+        glowStrip.position.set(FOLD_X, FOLD_Y + .013, FOLD_Z);
+        scene.add(glowStrip);
+        // Accent point light on station
+        const stLight = new THREE.PointLight(0x0ea5e9, .8, 1.5);
+        stLight.position.set(FOLD_X, FOLD_Y + .3, FOLD_Z);
+        scene.add(stLight);
 
-        // ============================================================
-        // UR3 ROBOT ARM
-        // Dimensions based on real UR3 (scaled in meters):
-        // Base mount: 128mm diameter
-        // Shoulder to Elbow: 243.65mm
-        // Elbow to Wrist: 213.25mm
-        // Wrist 1-2: 83.25mm, 2-3: 83.25mm
-        // ============================================================
-        const ROBOT_X = -0.05;
-        const ROBOT_Z = -0.1;
-        const ROBOT_BASE_Y = TABLE_TOP;
+        // ── ZONE LABELS on table ──────────────────────────────────────
+        // Visual markers for zones
+        const ZONES = {
+            A1: { x: -.32, z: -.32 }, A2: { x: 0, z: -.32 }, A3: { x: .32, z: -.32 },
+            B1: { x: -.32, z: .18 }, B2: { x: 0, z: .18 }, B3: { x: .32, z: .18 },
+        };
+        const zoneMeshes = {};
+        Object.entries(ZONES).forEach(([k, v]) => {
+            const m = new THREE.Mesh(
+                new THREE.PlaneGeometry(.22, .18),
+                new THREE.MeshBasicMaterial({ color: 0x1e3a5f, transparent: true, opacity: .4, side: THREE.DoubleSide })
+            );
+            m.rotation.x = -Math.PI / 2;
+            m.position.set(v.x, TABLE_TOP + .002, v.z);
+            m.userData.key = k;
+            scene.add(m);
+            zoneMeshes[k] = m;
+        });
 
-        // Materials
-        const matDark = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: 0.4, metalness: 0.7 });
-        const matBlue = new THREE.MeshStandardMaterial({ color: 0x1d4ed8, roughness: 0.3, metalness: 0.8 });
-        const matJoint = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: 0.3, metalness: 0.9 });
-        const matGlow = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x1d4ed8, emissiveIntensity: 0.5, roughness: 0.2, metalness: 0.9 });
+        // ── UR3 ARM ───────────────────────────────────────────────────
+        const RX = 0, RZ = -.05, RY = TABLE_TOP;
 
-        function makeCylinder(rt, rb, h, seg, mat) {
-            return new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat);
-        }
-        function makeBox(w, h, d, mat) {
-            return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-        }
+        const mDark = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: .4, metalness: .75 });
+        const mBlue = new THREE.MeshStandardMaterial({ color: 0x1d4ed8, roughness: .25, metalness: .85 });
+        const mJoint = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: .3, metalness: .9 });
+        const mGlow = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x1d4ed8, emissiveIntensity: .6, roughness: .2, metalness: .9 });
+        const mSuction = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: .95 });
 
-        // --- Assembly hierarchy ---
-        // J0: Base Group (rotate Y) — at robot base on table
-        // J1: Shoulder Group (rotate Z/X)
-        // J2: Elbow Group (rotate Z)
-        // J3: Wrist1 Group (rotate Z)
-        // J4: Wrist2 Group (rotate Y)
-        // J5: Wrist3 Group (end-effector, rotate Z)
+        function cyl(rt, rb, h, seg, mat) { return new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat); }
+        function box(w, h, d, mat) { return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); }
 
-        const J0 = new THREE.Group(); // base rotation (Y)
-        J0.position.set(ROBOT_X, ROBOT_BASE_Y, ROBOT_Z);
+        // J0 = base group (rotate Y = pan left/right)
+        const J0 = new THREE.Group(); J0.position.set(RX, RY, RZ);
 
-        // Base mount cylinder
-        const baseCyl = makeCylinder(0.07, 0.08, 0.08, 24, matJoint);
-        baseCyl.position.y = 0.04;
-        J0.add(baseCyl);
-        const baseRing = makeCylinder(0.065, 0.065, 0.02, 24, matGlow);
-        baseRing.position.y = 0.075;
-        J0.add(baseRing);
+        // Base cylinder
+        const baseCyl = cyl(.072, .085, .09, 24, mJoint); baseCyl.position.y = .045; J0.add(baseCyl);
+        const baseRing = cyl(.068, .068, .016, 24, mGlow); baseRing.position.y = .085; J0.add(baseRing);
 
-        // J1: shoulder group
-        const J1 = new THREE.Group(); // rotates around Z
-        J1.position.y = 0.085;
-        J0.add(J1);
+        // J1 = shoulder joint group (rotate X = tilt forward/back)
+        const J1 = new THREE.Group(); J1.position.y = .09; J0.add(J1);
+        const shJoint = cyl(.058, .058, .1, 20, mJoint); shJoint.rotation.z = Math.PI / 2; J1.add(shJoint);
 
-        const shoulderJoint = makeCylinder(0.055, 0.055, 0.09, 20, matJoint);
-        shoulderJoint.rotation.z = Math.PI / 2;
-        shoulderJoint.position.x = 0;
-        J1.add(shoulderJoint);
+        // J2 = upper arm (rotates X at shoulder)
+        const J2 = new THREE.Group(); J1.add(J2);
+        const upperArm = box(.042, .248, .042, mBlue); upperArm.position.y = .124; J2.add(upperArm);
+        const elbowJoint = cyl(.052, .052, .065, 20, mJoint); elbowJoint.rotation.z = Math.PI / 2; elbowJoint.position.y = .248; J2.add(elbowJoint);
 
-        // Upper arm
-        const J2 = new THREE.Group(); // rotates Z
-        const upperArm = makeBox(0.04, 0.244, 0.04, matBlue);
-        upperArm.position.y = 0.122;
-        J2.add(upperArm);
-        // Upper arm joint ring
-        const elbowRing = makeCylinder(0.05, 0.05, 0.06, 20, matJoint);
-        elbowRing.rotation.z = Math.PI / 2;
-        elbowRing.position.y = 0.244;
-        J2.add(elbowRing);
-        J1.add(J2);
+        // J3 = forearm (rotates X at elbow)
+        const J3 = new THREE.Group(); J3.position.y = .248; J2.add(J3);
+        const forearm = box(.036, .215, .036, mBlue); forearm.position.y = .108; J3.add(forearm);
+        const w1Joint = cyl(.042, .042, .055, 20, mGlow); w1Joint.rotation.z = Math.PI / 2; w1Joint.position.y = .215; J3.add(w1Joint);
 
-        // Forearm
-        const J3 = new THREE.Group(); // rotates Z
-        J3.position.y = 0.244;
-        const forearm = makeBox(0.035, 0.213, 0.035, matBlue);
-        forearm.position.y = 0.107;
-        J3.add(forearm);
-        const wrist1Ring = makeCylinder(0.04, 0.04, 0.05, 20, matJoint);
-        wrist1Ring.rotation.z = Math.PI / 2;
-        wrist1Ring.position.y = 0.213;
-        J3.add(wrist1Ring);
-        J2.add(J3);
+        // J4 = wrist1 (rotates X)
+        const J4 = new THREE.Group(); J4.position.y = .215; J3.add(J4);
+        const w1Link = box(.032, .09, .032, mDark); w1Link.position.y = .045; J4.add(w1Link);
+        const w2Joint = cyl(.036, .036, .048, 20, mGlow); w2Joint.rotation.x = Math.PI / 2; w2Joint.position.y = .09; J4.add(w2Joint);
 
-        // Wrist 1
-        const J4 = new THREE.Group(); // rotates Z
-        J4.position.y = 0.213;
-        const wrist1Link = makeBox(0.03, 0.083, 0.03, matDark);
-        wrist1Link.position.y = 0.042;
-        J4.add(wrist1Link);
-        const wrist2Ring = makeCylinder(0.035, 0.035, 0.045, 20, matGlow);
-        wrist2Ring.rotation.x = Math.PI / 2;
-        wrist2Ring.position.y = 0.083;
-        J4.add(wrist2Ring);
-        J3.add(J4);
+        // J5 = wrist2 (rotates Y)
+        const J5 = new THREE.Group(); J5.position.y = .09; J4.add(J5);
+        const w2Link = box(.032, .09, .032, mDark); w2Link.position.y = .045; J5.add(w2Link);
 
-        // Wrist 2
-        const J5 = new THREE.Group(); // rotates Y
-        J5.position.y = 0.083;
-        const wrist2Link = makeBox(0.03, 0.083, 0.03, matDark);
-        wrist2Link.position.y = 0.042;
-        J5.add(wrist2Link);
-        const wrist3Ring = makeCylinder(0.03, 0.03, 0.04, 20, matGlow);
-        wrist3Ring.position.y = 0.083;
-        J5.add(wrist3Ring);
-        J4.add(J5);
-
-        // End Effector (Suction Cup)
-        const J6 = new THREE.Group(); // end
-        J6.position.y = 0.083;
-        const eeStick = makeCylinder(0.015, 0.015, 0.04, 12, matDark);
-        eeStick.position.y = 0.02;
-        J6.add(eeStick);
-        const suction = makeCylinder(0.025, 0.035, 0.01, 16, new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 }));
-        suction.position.y = 0.045;
-        J6.add(suction);
-        // Suction glow when active
-        const suctionGlow = new THREE.PointLight(0x60a5fa, 0, 0.3);
-        suctionGlow.position.y = 0.05;
-        J6.add(suctionGlow);
-        J5.add(J6);
+        // J6 = end effector
+        const J6 = new THREE.Group(); J6.position.y = .09; J5.add(J6);
+        const eeRod = cyl(.012, .012, .05, 12, mDark); eeRod.position.y = .025; J6.add(eeRod);
+        const suctionCup = cyl(.032, .04, .012, 20, mSuction); suctionCup.position.y = .056; J6.add(suctionCup);
+        // Vacuum indicator ring
+        const vacRing = cyl(.03, .03, .003, 20, mGlow); vacRing.position.y = .063; J6.add(vacRing);
+        const suctionGlow = new THREE.PointLight(0x60a5fa, 0, .4); suctionGlow.position.y = .06; J6.add(suctionGlow);
 
         scene.add(J0);
 
-        // Helper to get world position of end effector
-        function getEEWorldPos() {
-            suction.updateWorldMatrix(true, false);
-            const pos = new THREE.Vector3();
-            suction.getWorldPosition(pos);
-            pos.y += 0.05;
-            return pos;
-        }
+        // ── BOX ───────────────────────────────────────────────────────
+        const BW = .25, BD = .17, BH = .012; // flat cardboard (25×17cm, 1.2cm thick)
+        const cardMat = new THREE.MeshStandardMaterial({ color: 0xe07b20, roughness: .85 });
+        const cardTop = new THREE.MeshStandardMaterial({ color: 0xc96d18, roughness: .85 });
+        const lineMat = new THREE.MeshBasicMaterial({ color: 0x7c3d0c });
+        // 3D folded box material
+        const foldedMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: .8 });
+        const foldedInner = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: .85 });
 
-        // ============================================================
-        // BOX (17x25x9 cm = 0.17x0.25x0.09 m — flat, unfolded)
-        // ============================================================
-        const BOX_W = 0.25, BOX_D = 0.17, BOX_H = 0.005; // flat unfolded cardboard
-        const boxMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.9, metalness: 0.0, side: THREE.DoubleSide });
-        const boxTopMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.9 });
-        let boxMesh = null;
-        let boxPos = new THREE.Vector3(0, TABLE_TOP + BOX_H / 2, 0);
+        let boxGroup = null;
+        let boxWorldPos = new THREE.Vector3();
         let boxPlaced = false;
+        let selectedZone = null;
         let isRunning = false;
-        let phase = -1;
+        let foldedBox = null;
 
-        // Placement indicator
-        const ringGeo = new THREE.RingGeometry(0.14, 0.15, 40);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, side: THREE.DoubleSide, transparent: true, opacity: 0.7 });
-        const placementRing = new THREE.Mesh(ringGeo, ringMat);
-        placementRing.rotation.x = -Math.PI / 2;
-        placementRing.position.y = TABLE_TOP + 0.001;
-        placementRing.visible = false;
-        scene.add(placementRing);
-
-        function createBox(pos) {
-            if (boxMesh) scene.remove(boxMesh);
-            const bg = new THREE.Group();
-
-            // Flat cardboard sheet (unfolded box)
-            const base = new THREE.Mesh(new THREE.BoxGeometry(BOX_W, BOX_H, BOX_D), boxMat);
-            bg.add(base);
-
-            // Cardboard fold lines (dark lines on top)
-            const lineGeo = new THREE.BoxGeometry(0.001, BOX_H + 0.001, BOX_D);
-            const lineMat = new THREE.MeshBasicMaterial({ color: 0x7c4a1a });
-            [-BOX_W / 3, 0, BOX_W / 3].forEach(x => {
-                const line = new THREE.Mesh(lineGeo, lineMat);
-                line.position.x = x;
-                bg.add(line);
+        function buildFlatBox(pos) {
+            if (boxGroup) { scene.remove(boxGroup); boxGroup = null; }
+            const g = new THREE.Group();
+            // Main flat cardboard sheet
+            const sheet = new THREE.Mesh(new THREE.BoxGeometry(BW, BH, BD), cardMat);
+            g.add(sheet);
+            // Fold crease lines on top face
+            const creaseMat = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
+            [-.08, .0, .08].forEach(x => {
+                const c = new THREE.Mesh(new THREE.BoxGeometry(.003, BH + .001, BD), creaseMat);
+                c.position.x = x; g.add(c);
             });
+            [-0.06, .06].forEach(z => {
+                const c = new THREE.Mesh(new THREE.BoxGeometry(BW, BH + .001, .003), creaseMat);
+                c.position.z = z; g.add(c);
+            });
+            g.position.copy(pos);
+            g.castShadow = true; g.receiveShadow = true;
+            boxGroup = g; scene.add(g);
+            boxWorldPos.copy(pos);
+        }
 
-            bg.position.copy(pos);
-            bg.castShadow = true;
-            bg.receiveShadow = true;
-            boxMesh = bg;
-            scene.add(bg);
+        function buildFoldedBox(pos) {
+            if (foldedBox) { scene.remove(foldedBox); foldedBox = null; }
+            const g = new THREE.Group();
+            // Box body (17×25×9 cm → 0.17×0.25×0.09 m)
+            const bw = .25, bh = .09, bd = .17;
+            const outer = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), foldedMat);
+            outer.position.y = bh / 2;
+            g.add(outer);
+            // Slightly darker inner face visible on top
+            const innerTop = new THREE.Mesh(new THREE.PlaneGeometry(bw - .01, bd - .01), foldedInner);
+            innerTop.rotation.x = -Math.PI / 2;
+            innerTop.position.y = bh + .001;
+            g.add(innerTop);
+            // Fold crease lines on top
+            const cr = new THREE.MeshBasicMaterial({ color: 0x7c4a00 });
+            const cl1 = new THREE.Mesh(new THREE.BoxGeometry(.002, bh + .002, bd), cr);
+            g.add(cl1);
+            g.position.copy(pos);
+            g.castShadow = true;
+            foldedBox = g; scene.add(g);
+        }
 
-            document.getElementById('box-status').textContent = 'Placed ✓';
-            document.getElementById('box-status').className = 'status-value placed';
-            document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-box"></i><span>Box placed! Click "Start Pick & Place" to begin.</span>';
+        // ── ZONE PLACEMENT ────────────────────────────────────────────
+        window.placeBox = (zone) => {
+            if (isRunning) return;
+            // Update zone button styles
+            document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+            document.getElementById('z-' + zone).classList.add('selected');
+            // Reset zone highlight colors
+            Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
+            zoneMeshes[zone].material.color.set(0x1d4ed8);
+            selectedZone = zone;
+
+            const z = ZONES[zone];
+            buildFlatBox(new THREE.Vector3(z.x, TABLE_TOP + BH / 2, z.z));
+            document.getElementById('box-sts').textContent = 'วางแล้ว ✓';
+            document.getElementById('box-sts').className = 'blue';
             document.getElementById('btn-start').disabled = false;
+            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-box"></i><span>วางกล่องที่ zone ' + zone + ' แล้ว — กด Start เพื่อเริ่ม</span>';
             boxPlaced = true;
-            placementRing.position.set(pos.x, TABLE_TOP + 0.001, pos.z);
+        };
+
+        // ── ANIMATION ─────────────────────────────────────────────────
+        // Joint angle names: j0=base Y, j1=shoulder X, j2=elbow X, j3=wrist1 X, j4=wrist2 Y, j5=ee Z
+        const HOME = { j0: 0, j1: -0.35, j2: 1.0, j3: -0.7, j4: 0, j5: 0 };
+        let cur = { ...HOME }, tgt = { ...HOME }, frm = { ...HOME };
+        let animT = 0, animDur = 0, onDone = null;
+
+        function applyAngles(a) {
+            J0.rotation.y = a.j0;
+            J2.rotation.x = a.j1;
+            J3.rotation.x = a.j2;
+            J4.rotation.x = a.j3;
+            J5.rotation.y = a.j4;
+            J6.rotation.z = a.j5;
+        }
+        applyAngles(HOME);
+
+        function ease(t) { return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+        function anim(target, dur, cb) {
+            frm = { ...cur }; tgt = { ...target }; animT = 0; animDur = dur; onDone = cb;
         }
 
-        // ============================================================
-        // RAYCASTING for box placement
-        // ============================================================
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        const tablePlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -TABLE_TOP);
-
-        renderer.domElement.addEventListener('click', (e) => {
-            if (isRunning) return;
-            mouse.x = (e.clientX / innerWidth) * 2 - 1;
-            mouse.y = -(e.clientY / innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
-
-            // Check if click hits table surface
-            const tableTargets = [tableTopMesh];
-            const hits = raycaster.intersectObjects(tableTargets);
-            if (hits.length > 0) {
-                const pt = hits[0].point;
-                // Clamp within table bounds (avoid robot base)
-                const hw = TABLE_W / 2 - BOX_W / 2 - 0.05;
-                const hd = TABLE_D / 2 - BOX_D / 2 - 0.05;
-                const cx = Math.max(-hw, Math.min(hw, pt.x));
-                const cz = Math.max(-hd, Math.min(hd, pt.z));
-                // Keep away from robot base
-                const distToRobot = Math.sqrt((cx - ROBOT_X) ** 2 + (cz - ROBOT_Z) ** 2);
-                if (distToRobot < 0.15) return;
-
-                boxPos.set(cx, TABLE_TOP + BOX_H / 2, cz);
-                createBox(boxPos.clone());
-            }
-        });
-
-        // Hover effect
-        renderer.domElement.addEventListener('mousemove', (e) => {
-            if (isRunning) return;
-            mouse.x = (e.clientX / innerWidth) * 2 - 1;
-            mouse.y = -(e.clientY / innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
-            const hits = raycaster.intersectObjects([tableTopMesh]);
-            if (hits.length > 0) {
-                const pt = hits[0].point;
-                placementRing.visible = true;
-                placementRing.position.set(pt.x, TABLE_TOP + 0.001, pt.z);
-                renderer.domElement.style.cursor = 'crosshair';
-            } else {
-                placementRing.visible = boxPlaced;
-                renderer.domElement.style.cursor = 'default';
-            }
-        });
-
-        // ============================================================
-        // ANIMATION SYSTEM — keyframe-based IK
-        // ============================================================
-        // Joint angle targets (in radians)
-        // J0: base rotation (Y), J1: shoulder (Z), J2: elbow (Z),
-        // J3: wrist1 (Z), J4: wrist2 (Y), J5: wrist3 (Z)
-        const JOINT_HOME = { j0: 0, j1: -Math.PI / 4, j2: Math.PI / 2, j3: -Math.PI / 4, j4: 0, j5: 0 };
-        const JOINT_NAMES = ['j0', 'j1', 'j2', 'j3', 'j4', 'j5'];
-        let currentAngles = { ...JOINT_HOME };
-        let targetAngles = { ...JOINT_HOME };
-        let animT = 0;
-        let animDuration = 0;
-        let fromAngles = { ...JOINT_HOME };
-        let onPhaseComplete = null;
-
-        const phases = [
-            "APPROACH (ขยับแขนไปด้านบนกล่อง)",
-            "PICK (ลงดูดกล่อง)",
-            "LIFT (ยกกล่องขึ้น)",
-            "TRANSIT (เคลื่อนไปทิศทาง Station)",
-            "PLACE (วางลงบน Station)"
-        ];
-
-        function setPhaseUI(p) {
+        function setPhase(p) {
             for (let i = 0; i < 5; i++) {
-                const el = document.getElementById('ph-' + i);
-                if (i < p) { el.className = 'phase-step done'; }
-                else if (i === p) { el.className = 'phase-step active'; }
-                else { el.className = 'phase-step'; }
+                const el = document.getElementById('p' + i);
+                el.className = 'ph' + (i < p ? ' done' : i === p ? ' act' : '');
             }
-            document.getElementById('robot-phase').textContent = p >= 0 && p < 5 ? phases[p].split(' ')[0] : '—';
+            document.getElementById('ph-cur').textContent = p < 5 ? ['APPROACH', 'PICK', 'LIFT', 'TRANSIT', 'FOLD'][p] : 'DONE ✓';
         }
 
-        function startAnim(target, duration, onDone) {
-            fromAngles = { ...currentAngles };
-            targetAngles = { ...target };
-            animT = 0;
-            animDuration = duration;
-            onPhaseComplete = onDone;
+        function getBaseAngle(bx, bz) {
+            return Math.atan2(bx - RX, -(bz - RZ));
         }
 
-        function easeInOut(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
-
-        function computeBoxAngles(bx, bz) {
-            // base rotation to face box from robot position
-            const dx = bx - ROBOT_X;
-            const dz = bz - ROBOT_Z;
-            const j0 = Math.atan2(dx, -dz);
-
-            // distance on horizontal plane from robot shoulder
-            const dist = Math.sqrt(dx * dx + dz * dz);
-            // Height difference: ee must reach table surface
-            const dy = -(0.085 + 0.244 + 0.213 + 0.083 + 0.083 + 0.045);  // total arm length approx
-            // simplified: use fixed shoulder/elbow for approach height
-            const j1 = -0.6;
-            const j2 = 1.2;
-            const j3 = -0.7;
-            return { j0, j1, j2, j3, j4: 0, j5: 0 };
-        }
-
-        function runPickAndPlace() {
-            if (!boxPlaced) return;
+        window.startSimulation = () => {
+            if (!boxPlaced || isRunning) return;
             isRunning = true;
-            controls.enabled = false;
+            ctrl.enabled = false;
             document.getElementById('btn-start').disabled = true;
-            document.getElementById('robot-status').textContent = 'RUNNING';
-            document.getElementById('robot-status').className = 'status-value moving';
+            document.getElementById('sts').textContent = 'RUNNING';
+            document.getElementById('sts').className = 'run';
 
-            const bx = boxPos.x, bz = boxPos.z;
-            const boxAngles = computeBoxAngles(bx, bz);
+            const bx = boxWorldPos.x, bz = boxWorldPos.z;
+            const j0 = getBaseAngle(bx, bz);
+            // Horizontal dist from robot base on table plane
+            const dx = bx - RX, dz = bz - RZ;
+            const dist = Math.sqrt(dx * dx + dz * dz);
 
-            // Phase 0: Approach (go above box)
-            setPhaseUI(0);
-            document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-arrows-to-dot"></i><span>Phase 1: Approaching box...</span>';
-            startAnim({ j0: boxAngles.j0, j1: -0.5, j2: 1.0, j3: -0.6, j4: 0, j5: 0 }, 2.5, () => {
-                // Phase 1: Pick (descend to box)
-                setPhaseUI(1);
-                document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-magnet"></i><span>Phase 2: Picking up box...</span>';
-                startAnim({ j0: boxAngles.j0, j1: boxAngles.j1, j2: boxAngles.j2, j3: boxAngles.j3, j4: 0, j5: 0 }, 2.0, () => {
-                    suctionGlow.intensity = 2.0; // activate suction
-                    // Attach box to end effector
-                    if (boxMesh) {
-                        scene.remove(boxMesh);
-                        J6.add(boxMesh);
-                        boxMesh.position.set(0, 0.065, 0);
-                        boxMesh.rotation.set(0, 0, 0);
+            // Phase 0: Go to position ABOVE box (arm extended out, not down yet)
+            setPhase(0);
+            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-arrows-to-dot"></i><span>ขยับแขนไปด้านบนกล่อง…</span>';
+            anim({ j0, j1: -0.1, j2: 0.9, j3: -0.9, j4: 0, j5: 0 }, 2.5, () => {
+                // Phase 1: PICK - bend down dramatically to table level
+                setPhase(1);
+                document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-hand"></i><span>โค้งลงดูดกล่อง…</span>';
+                anim({ j0, j1: 0.65, j2: 1.35, j3: -1.7, j4: 0, j5: 0 }, 2.0, () => {
+                    // Attach box
+                    suctionGlow.intensity = 2.5;
+                    if (boxGroup) {
+                        J6.attach(boxGroup); // keep world position
+                        // Flatten rotation relative to J6
+                        boxGroup.rotation.set(0, 0, 0);
+                        boxGroup.position.set(0, .068, 0);
                     }
-                    // Phase 2: Lift
-                    setPhaseUI(2);
-                    document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-arrow-up"></i><span>Phase 3: Lifting...</span>';
-                    startAnim({ j0: boxAngles.j0, j1: -0.3, j2: 0.8, j3: -0.6, j4: 0, j5: 0 }, 1.8, () => {
-                        // Phase 3: Transit to folding station
-                        setPhaseUI(3);
-                        document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-rotate-right"></i><span>Phase 4: Moving to station...</span>';
-                        const stAngs = computeBoxAngles(STATION_X, 0);
-                        startAnim({ j0: stAngs.j0, j1: -0.4, j2: 0.9, j3: -0.6, j4: 0, j5: 0 }, 2.5, () => {
-                            // Phase 4: Place on station
-                            setPhaseUI(4);
-                            document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-box-open"></i><span>Phase 5: Placing on station...</span>';
-                            startAnim({ j0: stAngs.j0, j1: stAngs.j1, j2: stAngs.j2, j3: stAngs.j3, j4: 0, j5: 0 }, 2.0, () => {
-                                // Release box
+                    // Phase 2: LIFT
+                    setPhase(2);
+                    document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-arrow-up"></i><span>ยกกล่องขึ้น…</span>';
+                    anim({ j0, j1: -0.2, j2: 0.85, j3: -0.75, j4: 0, j5: 0 }, 1.8, () => {
+                        // Phase 3: TRANSIT to folding station
+                        setPhase(3);
+                        document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-rotate-right"></i><span>เคลื่อนไปแท่นพับ…</span>';
+                        const j0f = getBaseAngle(FOLD_X, FOLD_Z);
+                        anim({ j0: j0f, j1: -0.1, j2: 0.9, j3: -0.85, j4: 0, j5: 0 }, 2.5, () => {
+                            // Phase 4: PLACE (lower down to station)
+                            setPhase(4);
+                            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-box-open"></i><span>วางและพับกล่อง…</span>';
+                            anim({ j0: j0f, j1: 0.5, j2: 1.25, j3: -1.55, j4: 0, j5: 0 }, 2.0, () => {
+                                // Release
                                 suctionGlow.intensity = 0;
-                                if (boxMesh) {
-                                    J6.remove(boxMesh);
-                                    scene.add(boxMesh);
-                                    boxMesh.position.set(STATION_X, STATION_Y + BOX_H / 2, 0);
-                                    boxMesh.rotation.set(0, 0, 0);
+                                if (boxGroup) {
+                                    scene.attach(boxGroup);
+                                    scene.remove(boxGroup); boxGroup = null;
                                 }
+                                // Show 3D folded box
+                                buildFoldedBox(new THREE.Vector3(FOLD_X, FOLD_Y + .001, FOLD_Z));
                                 // Return home
                                 setTimeout(() => {
-                                    startAnim(JOINT_HOME, 2.0, () => {
-                                        isRunning = false;
-                                        controls.enabled = true;
-                                        boxPlaced = false;
-                                        placementRing.position.y = -10;
-                                        document.getElementById('robot-status').textContent = 'COMPLETE';
-                                        document.getElementById('robot-status').className = 'status-value done';
-                                        document.getElementById('robot-phase').textContent = 'DONE ✓';
-                                        document.getElementById('box-status').textContent = 'Delivered ✓';
-                                        document.getElementById('box-status').className = 'status-value done';
-                                        document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-check-circle"></i><span>Pick & Place complete! Click Reset to restart.</span>';
-                                        document.getElementById('btn-reset').style.display = 'block';
-                                        setPhaseUI(5);
+                                    anim(HOME, 2.2, () => {
+                                        isRunning = false; ctrl.enabled = true; boxPlaced = false;
+                                        selectedZone = null;
+                                        document.getElementById('sts').textContent = 'DONE ✓';
+                                        document.getElementById('sts').className = 'ok';
+                                        document.getElementById('box-sts').textContent = 'พับแล้ว ✓';
+                                        document.getElementById('box-sts').className = 'ok';
+                                        document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-check-circle"></i><span>เสร็จสิ้น! กล่องถูกพับแล้ว — กด Reset เพื่อเริ่มใหม่</span>';
+                                        document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+                                        Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
+                                        setPhase(5);
                                     });
-                                }, 500);
+                                }, 600);
                             });
                         });
                     });
                 });
             });
-        }
+        };
 
-        // ============================================================
-        // UI Bindings
-        // ============================================================
-        document.getElementById('btn-start').addEventListener('click', runPickAndPlace);
+        // ── BUTTON BINDINGS ───────────────────────────────────────────
+        document.getElementById('btn-start').addEventListener('click', window.startSimulation);
         document.getElementById('btn-reset').addEventListener('click', () => {
-            if (boxMesh) { scene.remove(boxMesh); boxMesh = null; }
-            if (J6.children.length > 3) J6.remove(J6.children[J6.children.length - 1]);
-            boxPlaced = false;
-            isRunning = false;
-            suctionGlow.intensity = 0;
-            currentAngles = { ...JOINT_HOME };
-            targetAngles = { ...JOINT_HOME };
-            animT = 0;
-            animDuration = 0;
-            applyAngles(JOINT_HOME);
-            controls.enabled = true;
-            placementRing.visible = false;
-            document.getElementById('robot-status').textContent = 'IDLE';
-            document.getElementById('robot-status').className = 'status-value idle';
-            document.getElementById('robot-phase').textContent = '—';
-            document.getElementById('box-status').textContent = 'No';
-            document.getElementById('box-status').className = 'status-value idle';
+            if (boxGroup) { scene.remove(boxGroup); boxGroup = null; }
+            if (foldedBox) { scene.remove(foldedBox); foldedBox = null; }
+            // Detach any lingering box from J6
+            while (J6.children.length > 3) J6.remove(J6.children[J6.children.length - 1]);
+            isRunning = false; ctrl.enabled = true; boxPlaced = false; selectedZone = null;
+            suctionGlow.intensity = 0; animDur = 0; animT = 0; cur = { ...HOME };
+            applyAngles(HOME);
+            document.getElementById('sts').textContent = 'IDLE'; document.getElementById('sts').className = 'idle';
+            document.getElementById('ph-cur').textContent = '—';
+            document.getElementById('box-sts').textContent = 'ยังไม่วาง'; document.getElementById('box-sts').className = 'idle';
             document.getElementById('btn-start').disabled = true;
-            document.getElementById('info-text').innerHTML = '<i class="fa-solid fa-mouse-pointer"></i><span>Click on the table to place the cardboard box</span>';
-            setPhaseUI(-1);
+            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-table-cells"></i><span>เลือกตำแหน่ง A1-B3 เพื่อวางกล่องกระดาษบนโต๊ะ</span>';
+            document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+            Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
+            setPhase(-1);
         });
 
-        // ============================================================
-        // CAMERA PRESETS
-        // ============================================================
-        const CAM_PRESETS = {
-            iso: { pos: [1.5, 1.2, 1.8], target: [0, 0.4, 0] },
-            front: { pos: [0, 0.8, 2.2], target: [0, 0.4, 0] },
-            side: { pos: [2.2, 0.8, 0], target: [0, 0.4, 0] },
-            top: { pos: [0, 2.8, 0.001], target: [0, 0, 0] },
+        // ── CAMERA PRESETS ────────────────────────────────────────────
+        const CAM = {
+            iso: [[1.4, 1.1, 1.7], [0, .4, 0]],
+            front: [[0, .9, 2.2], [0, .4, 0]],
+            side: [[2.2, .9, 0], [0, .4, 0]],
+            top: [[0, 3, .001], [0, 0, 0]],
         };
-        let camTarget = new THREE.Vector3(0, 0.4, 0);
-        let camFrom = camera.position.clone();
-        let camTo = camera.position.clone();
-        let camT = 1;
-
-        window.setCamera = (name) => {
-            const p = CAM_PRESETS[name];
-            camFrom = camera.position.clone();
-            camTo = new THREE.Vector3(...p.pos);
-            camTarget = new THREE.Vector3(...p.target);
-            camT = 0;
-            document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('cam-' + name) && document.getElementById('cam-' + name).classList.add('active');
+        let cFrom = new THREE.Vector3(), cTo = new THREE.Vector3(), cTarget = new THREE.Vector3(0, .4, 0), cT = 1;
+        window.setCamera = (n) => {
+            const p = CAM[n];
+            cFrom.copy(camera.position);
+            cTo.set(...p[0]); cTarget.set(...p[1]); cT = 0;
+            document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('act'));
+            document.getElementById('cam-' + n)?.classList.add('act');
         };
 
-        // ============================================================
-        // APPLY JOINT ANGLES
-        // ============================================================
-        function applyAngles(a) {
-            J0.rotation.y = a.j0;
-            J2.rotation.z = a.j1;
-            J3.rotation.z = a.j2;
-            J4.rotation.z = a.j3;
-            J5.rotation.y = a.j4;
-            J6.rotation.z = a.j5;
-        }
-        applyAngles(JOINT_HOME);
-
-        // ============================================================
-        // ANIMATION LOOP
-        // ============================================================
+        // ── MAIN LOOP ─────────────────────────────────────────────────
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
             const dt = clock.getDelta();
 
-            // Lerp joint animation
-            if (animDuration > 0) {
-                animT = Math.min(animT + dt / animDuration, 1);
-                const t = easeInOut(animT);
-                for (const k of JOINT_NAMES) {
-                    currentAngles[k] = fromAngles[k] + (targetAngles[k] - fromAngles[k]) * t;
-                }
-                applyAngles(currentAngles);
-                if (animT >= 1) {
-                    animDuration = 0;
-                    if (onPhaseComplete) { const fn = onPhaseComplete; onPhaseComplete = null; fn(); }
-                }
+            // Joint animation
+            if (animDur > 0) {
+                animT = Math.min(animT + dt / animDur, 1);
+                const t = ease(animT);
+                for (const k in cur) cur[k] = frm[k] + (tgt[k] - frm[k]) * t;
+                applyAngles(cur);
+                if (animT >= 1) { animDur = 0; if (onDone) { const f = onDone; onDone = null; f(); } }
             }
 
             // Camera tween
-            if (camT < 1) {
-                camT = Math.min(camT + dt * 1.5, 1);
-                const t = easeInOut(camT);
-                camera.position.lerpVectors(camFrom, camTo, t);
-                controls.target.lerp(camTarget, 0.1);
+            if (cT < 1) {
+                cT = Math.min(cT + dt * 1.8, 1);
+                const t = ease(cT);
+                camera.position.lerpVectors(cFrom, cTo, t);
+                ctrl.target.lerp(cTarget, .12);
             }
 
-            // Pulse robot accent light
-            robotAccent.intensity = 1.0 + 0.5 * Math.sin(Date.now() * 0.003);
+            // Pulse robot light
+            robotLight.intensity = 1.8 + .5 * Math.sin(Date.now() * .003);
 
-            controls.update();
+            ctrl.update();
             renderer.render(scene, camera);
         }
 
