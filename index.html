@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>UR3 Robot Simulation | Oracle Engineering</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
@@ -31,9 +31,9 @@
         }
 
         .glass {
-            background: rgba(10, 20, 40, .82);
+            background: rgba(8, 18, 38, .85);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(99, 179, 237, .14);
+            border: 1px solid rgba(59, 130, 246, .14);
             border-radius: 18px
         }
 
@@ -42,50 +42,50 @@
             top: 20px;
             left: 20px;
             z-index: 20;
-            width: 270px;
+            width: 268px;
             display: flex;
             flex-direction: column;
             gap: 10px
         }
 
-        .panel-title {
+        .p {
+            padding: 15px 17px
+        }
+
+        .ttl {
             font-size: 10px;
             font-weight: 700;
             letter-spacing: .2em;
             text-transform: uppercase;
             color: #60a5fa;
-            margin-bottom: 12px;
+            margin-bottom: 11px;
             display: flex;
             align-items: center;
             gap: 7px
-        }
-
-        .glass .inner {
-            padding: 16px 18px
         }
 
         .row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 7px 10px;
+            padding: 6px 10px;
             background: rgba(255, 255, 255, .04);
             border-radius: 9px;
-            margin-bottom: 7px;
+            margin-bottom: 6px;
             font-size: 12px
         }
 
-        .row span:first-child {
+        .row .l {
             color: #94a3b8
         }
 
-        .row span:last-child {
+        .row .v {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700
         }
 
         .idle {
-            color: #64748b
+            color: #475569
         }
 
         .run {
@@ -97,7 +97,7 @@
             color: #34d399
         }
 
-        .blue {
+        .blu {
             color: #60a5fa
         }
 
@@ -113,17 +113,16 @@
             }
         }
 
-        /* Zone grid */
         .zone-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
+            gap: 5px;
             margin-bottom: 10px
         }
 
-        .zone-btn {
+        .zb {
             padding: 9px 4px;
-            border: 1px solid rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .07);
             border-radius: 10px;
             background: rgba(255, 255, 255, .04);
             color: #64748b;
@@ -135,20 +134,20 @@
             text-align: center
         }
 
-        .zone-btn:hover {
+        .zb:hover {
             background: rgba(59, 130, 246, .2);
             border-color: rgba(59, 130, 246, .4);
             color: #93c5fd
         }
 
-        .zone-btn.selected {
-            background: rgba(59, 130, 246, .3);
+        .zb.sel {
+            background: rgba(37, 99, 235, .3);
             border-color: #3b82f6;
             color: #fff;
-            box-shadow: 0 0 12px rgba(59, 130, 246, .4)
+            box-shadow: 0 0 12px rgba(59, 130, 246, .35)
         }
 
-        .btn-main {
+        .btn-p {
             width: 100%;
             padding: 12px;
             border: none;
@@ -167,18 +166,18 @@
             margin-bottom: 8px
         }
 
-        .btn-main:hover:not(:disabled) {
+        .btn-p:hover:not(:disabled) {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, .35)
+            box-shadow: 0 5px 18px rgba(59, 130, 246, .35)
         }
 
-        .btn-main:disabled {
-            opacity: .35;
+        .btn-p:disabled {
+            opacity: .3;
             cursor: not-allowed
         }
 
-        .btn-sec {
+        .btn-s {
             width: 100%;
             padding: 10px;
             border: 1px solid rgba(255, 255, 255, .1);
@@ -192,40 +191,39 @@
             transition: all .2s
         }
 
-        .btn-sec:hover {
-            background: rgba(255, 255, 255, .1);
+        .btn-s:hover {
+            background: rgba(255, 255, 255, .09);
             color: #fff
         }
 
-        .cam-grid {
+        .cam-g {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px
+            gap: 5px
         }
 
-        .cam-btn {
+        .cb {
             padding: 8px;
-            border: 1px solid rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .06);
             border-radius: 9px;
             background: rgba(255, 255, 255, .03);
             color: #64748b;
             font-size: 10px;
             font-weight: 700;
-            letter-spacing: .1em;
+            letter-spacing: .08em;
             text-transform: uppercase;
             cursor: pointer;
             transition: all .2s;
             font-family: 'JetBrains Mono', monospace
         }
 
-        .cam-btn:hover,
-        .cam-btn.act {
+        .cb:hover,
+        .cb.a {
             background: rgba(59, 130, 246, .2);
             border-color: rgba(59, 130, 246, .4);
             color: #60a5fa
         }
 
-        /* Phase sidebar */
         #phases {
             position: fixed;
             top: 20px;
@@ -239,10 +237,10 @@
         .ph {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 14px;
+            gap: 9px;
+            padding: 7px 13px;
             border-radius: 9px;
-            background: rgba(10, 20, 40, .7);
+            background: rgba(8, 18, 38, .78);
             border: 1px solid rgba(255, 255, 255, .05);
             font-size: 11px;
             color: #475569;
@@ -250,16 +248,16 @@
             white-space: nowrap
         }
 
-        .ph.act {
-            background: rgba(37, 99, 235, .22);
+        .ph.a {
+            background: rgba(37, 99, 235, .2);
             border-color: rgba(59, 130, 246, .4);
             color: #93c5fd
         }
 
-        .ph.done {
+        .ph.d {
             color: #34d399;
-            border-color: rgba(52, 211, 153, .25);
-            background: rgba(5, 46, 22, .25)
+            border-color: rgba(52, 211, 153, .2);
+            background: rgba(5, 46, 22, .2)
         }
 
         .dot {
@@ -271,17 +269,16 @@
             transition: all .4s
         }
 
-        .ph.act .dot {
+        .ph.a .dot {
             background: #3b82f6;
             box-shadow: 0 0 8px #3b82f6;
             animation: blink 1s infinite
         }
 
-        .ph.done .dot {
+        .ph.d .dot {
             background: #34d399
         }
 
-        /* Bottom info */
         #info {
             position: fixed;
             bottom: 20px;
@@ -291,16 +288,16 @@
         }
 
         .pill {
-            background: rgba(10, 20, 40, .85);
+            background: rgba(8, 18, 38, .88);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(99, 179, 237, .2);
+            border: 1px solid rgba(59, 130, 246, .2);
             border-radius: 999px;
-            padding: 11px 24px;
+            padding: 11px 22px;
             font-size: 13px;
             color: #94a3b8;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
             white-space: nowrap
         }
 
@@ -311,88 +308,80 @@
 </head>
 
 <body>
-    <!-- LEFT PANEL -->
     <div id="ui-left">
-        <!-- Status -->
         <div class="glass">
-            <div class="inner">
-                <div class="panel-title"><i class="fa-solid fa-robot"></i> UR3 Robot Arm</div>
-                <div class="row"><span>Status</span><span id="sts" class="idle">IDLE</span></div>
-                <div class="row"><span>Phase</span><span id="ph-cur" class="blue">—</span></div>
-                <div class="row"><span>Box</span><span id="box-sts" class="idle">ยังไม่วาง</span></div>
+            <div class="p">
+                <div class="ttl"><i class="fa-solid fa-robot"></i> UR3 Arm — Oracle Sim</div>
+                <div class="row"><span class="l">Status</span><span class="v idle" id="sts">IDLE</span></div>
+                <div class="row"><span class="l">Phase</span><span class="v blu" id="phc">—</span></div>
+                <div class="row"><span class="l">กล่อง</span><span class="v idle" id="bsts">ยังไม่วาง</span></div>
             </div>
         </div>
 
-        <!-- Zone selection -->
         <div class="glass">
-            <div class="inner">
-                <div class="panel-title"><i class="fa-solid fa-table-cells"></i> เลือกตำแหน่งวางกล่อง</div>
+            <div class="p">
+                <div class="ttl"><i class="fa-solid fa-table-cells-large"></i> เลือก Zone วางกล่อง</div>
                 <div class="zone-grid">
-                    <button class="zone-btn" id="z-A1" onclick="placeBox('A1')">A1</button>
-                    <button class="zone-btn" id="z-A2" onclick="placeBox('A2')">A2</button>
-                    <button class="zone-btn" id="z-A3" onclick="placeBox('A3')">A3</button>
-                    <button class="zone-btn" id="z-B1" onclick="placeBox('B1')">B1</button>
-                    <button class="zone-btn" id="z-B2" onclick="placeBox('B2')">B2</button>
-                    <button class="zone-btn" id="z-B3" onclick="placeBox('B3')">B3</button>
+                    <button class="zb" id="z-A1" onclick="placeBox('A1')">A1</button>
+                    <button class="zb" id="z-A2" onclick="placeBox('A2')">A2</button>
+                    <button class="zb" id="z-A3" onclick="placeBox('A3')">A3</button>
+                    <button class="zb" id="z-B1" onclick="placeBox('B1')">B1</button>
+                    <button class="zb" id="z-B2" onclick="placeBox('B2')">B2</button>
+                    <button class="zb" id="z-B3" onclick="placeBox('B3')">B3</button>
                 </div>
-                <button class="btn-main" id="btn-start" disabled>
-                    <i class="fa-solid fa-play"></i> Start Pick & Place
-                </button>
-                <button class="btn-sec" id="btn-reset">
-                    <i class="fa-solid fa-rotate-left"></i> Reset
-                </button>
+                <button class="btn-p" id="btn-st" disabled><i class="fa-solid fa-play"></i> Start Pick & Place</button>
+                <button class="btn-s" id="btn-rst"><i class="fa-solid fa-rotate-left"></i> Reset</button>
             </div>
         </div>
 
-        <!-- Camera -->
         <div class="glass">
-            <div class="inner">
-                <div class="panel-title"><i class="fa-solid fa-video"></i> Camera</div>
-                <div class="cam-grid">
-                    <button class="cam-btn act" id="cam-iso" onclick="setCamera('iso')">ISO</button>
-                    <button class="cam-btn" id="cam-front" onclick="setCamera('front')">FRONT</button>
-                    <button class="cam-btn" id="cam-side" onclick="setCamera('side')">SIDE</button>
-                    <button class="cam-btn" id="cam-top" onclick="setCamera('top')">TOP</button>
+            <div class="p">
+                <div class="ttl"><i class="fa-solid fa-video"></i> Camera</div>
+                <div class="cam-g">
+                    <button class="cb a" id="cam-iso" onclick="setCamera('iso')">ISO</button>
+                    <button class="cb" id="cam-front" onclick="setCamera('front')">FRONT</button>
+                    <button class="cb" id="cam-side" onclick="setCamera('side')">SIDE</button>
+                    <button class="cb" id="cam-top" onclick="setCamera('top')">TOP</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- PHASE SIDEBAR -->
     <div id="phases">
         <div class="ph" id="p0">
-            <div class="dot"></div>① Approach — ยื่นแขนไปเหนือกล่อง
+            <div class="dot"></div>① เข้าหา — Approach
         </div>
         <div class="ph" id="p1">
-            <div class="dot"></div>② Pick — โค้งลงดูดกล่อง
+            <div class="dot"></div>② โค้งดูด — Pick
         </div>
         <div class="ph" id="p2">
-            <div class="dot"></div>③ Lift — ยกกล่องขึ้น
+            <div class="dot"></div>③ ยก+เปิดกล่อง — Lift & Open
         </div>
         <div class="ph" id="p3">
-            <div class="dot"></div>④ Transit — เคลื่อนไปแท่นพับ
+            <div class="dot"></div>④ เคลื่อน — Transit
         </div>
         <div class="ph" id="p4">
-            <div class="dot"></div>⑤ Place & Fold — วางและพับกล่อง
+            <div class="dot"></div>⑤ พับก้น — Fold Bottom
         </div>
     </div>
 
-    <!-- BOTTOM INFO -->
     <div id="info">
-        <div class="pill" id="info-txt"><i class="fa-solid fa-table-cells"></i><span>เลือกตำแหน่ง A1-B3
-                เพื่อวางกล่องกระดาษบนโต๊ะ</span></div>
+        <div class="pill" id="info-txt"><i class="fa-solid fa-table-cells"></i><span>เลือก Zone A1–B3 เพื่อวางกล่อง
+                แล้วกด Start</span></div>
     </div>
 
     <script type="module">
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        // ── SCENE ─────────────────────────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════
+        // SCENE
+        // ═══════════════════════════════════════════════════════════════
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x060b17);
-        scene.fog = new THREE.FogExp2(0x060b17, 0.01);
+        scene.fog = new THREE.FogExp2(0x060b17, 0.009);
 
-        const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, 0.01, 200);
+        const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, 0.01, 100);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(innerWidth, innerHeight);
         renderer.setPixelRatio(devicePixelRatio);
@@ -402,389 +391,517 @@
 
         const ctrl = new OrbitControls(camera, renderer.domElement);
         ctrl.enableDamping = true; ctrl.dampingFactor = 0.08;
-        ctrl.target.set(0, 0.4, 0);
-        ctrl.minDistance = 0.4; ctrl.maxDistance = 6;
+        ctrl.target.set(0, 0.45, 0);
+        ctrl.minDistance = 0.4; ctrl.maxDistance = 7;
 
-        // ── LIGHTING ──────────────────────────────────────────────────
-        scene.add(new THREE.AmbientLight(0x162030, 2.5));
-        const sun = new THREE.DirectionalLight(0xd0e8ff, 3);
-        sun.position.set(2, 5, 2); sun.castShadow = true;
+        // ═══════════════════════════════════════════════════════════════
+        // LIGHTING
+        // ═══════════════════════════════════════════════════════════════
+        scene.add(new THREE.AmbientLight(0x102030, 3));
+        const sun = new THREE.DirectionalLight(0xd0e8ff, 3.5);
+        sun.position.set(3, 6, 2); sun.castShadow = true;
         sun.shadow.mapSize.set(2048, 2048);
         sun.shadow.camera.left = -3; sun.shadow.camera.right = 3;
         sun.shadow.camera.top = 3; sun.shadow.camera.bottom = -3;
         scene.add(sun);
-        scene.add(new THREE.DirectionalLight(0x4060bb, 0.6)).position.set(-2, 2, -2);
-        const robotLight = new THREE.PointLight(0x4080ff, 2, 4);
-        robotLight.position.set(0, 1.2, 0);
-        scene.add(robotLight);
+        const fill = new THREE.DirectionalLight(0x4466cc, 0.7);
+        fill.position.set(-3, 2, -3); scene.add(fill);
+        const roboLight = new THREE.PointLight(0x3b82f6, 2.5, 5);
+        roboLight.position.set(0, 1.5, 0); scene.add(roboLight);
+        // Station light
+        const stLamp = new THREE.SpotLight(0xffd580, 3, 3, Math.PI / 6, .3);
+        stLamp.position.set(1.2, 1.8, -0.3); scene.add(stLamp);
 
-        // ── FLOOR + GRID ──────────────────────────────────────────────
-        const floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(16, 16),
-            new THREE.MeshStandardMaterial({ color: 0x0a0e1a, roughness: .9 })
-        );
+        // ═══════════════════════════════════════════════════════════════
+        // FLOOR + GRID
+        // ═══════════════════════════════════════════════════════════════
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.MeshStandardMaterial({ color: 0x08101f, roughness: .9 }));
         floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
-        const grid = new THREE.GridHelper(16, 50, 0x1a3255, 0x111d30);
-        grid.position.y = 0.002; scene.add(grid);
+        scene.add(new THREE.GridHelper(20, 60, 0x1a3255, 0x101926));
 
-        // ── TABLE (120.2 × 121 cm) ────────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════
+        // TABLE (120.2 × 121 cm)
+        // ═══════════════════════════════════════════════════════════════
         const TW = 1.21, TD = 1.202, TH = 0.72;
-        const TABLE_TOP = TH + 0.03;
-        const tMat = new THREE.MeshStandardMaterial({ color: 0x263344, roughness: .55, metalness: .35 });
+        const TTOP = TH + 0.03; // table surface Y
+
+        // Table top
+        const tMat = new THREE.MeshStandardMaterial({ color: 0x1e2d44, roughness: .55, metalness: .4 });
         const tTop = new THREE.Mesh(new THREE.BoxGeometry(TW, .04, TD), tMat);
-        tTop.position.set(0, TH + .02, 0); tTop.receiveShadow = true; tTop.castShadow = true;
+        tTop.position.set(0, TTOP - .01, 0); tTop.receiveShadow = true; tTop.castShadow = true;
         scene.add(tTop);
-        // Blue glow edge
-        const edgeMesh = new THREE.Mesh(new THREE.BoxGeometry(TW + .003, .003, TD + .003), new THREE.MeshBasicMaterial({ color: 0x1d5fbd }));
-        edgeMesh.position.y = TH + .041; scene.add(edgeMesh);
+        // Glow edge
+        const edge = new THREE.Mesh(new THREE.BoxGeometry(TW + .003, .004, TD + .003), new THREE.MeshBasicMaterial({ color: 0x1d5fbd }));
+        edge.position.set(0, TTOP + .01, 0); scene.add(edge);
         // Legs
-        const legM = new THREE.MeshStandardMaterial({ color: 0x0d1826, metalness: .7, roughness: .4 });
-        [[-.57, .36, -.58], [.57, .36, -.58], [-.57, .36, .58], [.57, .36, .58]].forEach(p => {
-            const l = new THREE.Mesh(new THREE.BoxGeometry(.045, TH, .045), legM);
+        const lM = new THREE.MeshStandardMaterial({ color: 0x0d1826, metalness: .75, roughness: .35 });
+        [[-.57, TH / 2, -.58], [.57, TH / 2, -.58], [-.57, TH / 2, .58], [.57, TH / 2, .58]].forEach(p => {
+            const l = new THREE.Mesh(new THREE.BoxGeometry(.045, TH, .045), lM);
             l.position.set(...p); l.castShadow = true; scene.add(l);
         });
 
-        // ── FOLDING STATION (right of table) ─────────────────────────
-        // Inspired by video: flat platform with side guides + pressing bar
-        const FOLD_X = TW / 2 + 0.38;
-        const FOLD_Y = TABLE_TOP;
-        const FOLD_Z = 0.0;
+        // ═══════════════════════════════════════════════════════════════
+        // FOLDING STATION — Inspired by UR3 box-forming machine video
+        // Positioned in front of table (along Z front edge)
+        // ═══════════════════════════════════════════════════════════════
+        const FSX = 0, FSZ = TD / 2 + 0.4, FSY = 0;
 
-        const foldMatBase = new THREE.MeshStandardMaterial({ color: 0x1a2c42, roughness: .7, metalness: .5 });
-        const foldMatGuide = new THREE.MeshStandardMaterial({ color: 0x1e4070, roughness: .5, metalness: .7 });
-        const foldMatAccent = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, emissive: 0x0ea5e9, emissiveIntensity: .3 });
+        // Base plate
+        const fsM = new THREE.MeshStandardMaterial({ color: 0x1a2a3c, roughness: .65, metalness: .55 });
+        const fsBG = new THREE.Mesh(new THREE.BoxGeometry(.55, .025, .5), fsM);
+        fsBG.position.set(FSX, FSY + TTOP, FSZ); scene.add(fsBG);
 
-        // Base platform
-        const fBase = new THREE.Mesh(new THREE.BoxGeometry(.5, .025, .55), foldMatBase);
-        fBase.position.set(FOLD_X, FOLD_Y, FOLD_Z);
-        scene.add(fBase);
-
-        // Side guides (left & right)
-        const gW = .02, gH = .12, gD = .55;
-        [-1, 1].forEach(s => {
-            const g = new THREE.Mesh(new THREE.BoxGeometry(gW, gH, gD), foldMatGuide);
-            g.position.set(FOLD_X + s * .24, FOLD_Y + gH / 2, FOLD_Z);
-            scene.add(g);
+        // 4 corner pillars
+        const pilM = new THREE.MeshStandardMaterial({ color: 0x233040, metalness: .8, roughness: .35 });
+        [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
+            const p = new THREE.Mesh(new THREE.BoxGeometry(.025, .35, .025), pilM);
+            p.position.set(FSX + sx * .26, TTOP + .175 + FSY, FSZ + sz * .24); scene.add(p);
         });
-        // Front & back guides
-        [-1, 1].forEach(s => {
-            const g = new THREE.Mesh(new THREE.BoxGeometry(.7, .08, .02), foldMatGuide);
-            g.position.set(FOLD_X, FOLD_Y + .04, FOLD_Z + s * .265);
-            scene.add(g);
-        });
-        // Pressing bar (top horizontal bar)
-        const pressBar = new THREE.Mesh(new THREE.BoxGeometry(.52, .025, .03), new THREE.MeshStandardMaterial({ color: 0x2563eb, metalness: .9, roughness: .2 }));
-        pressBar.position.set(FOLD_X, FOLD_Y + .14, FOLD_Z);
-        scene.add(pressBar);
-        // Bottom fold line marker (cyan glow strip)
-        const glowStrip = new THREE.Mesh(new THREE.BoxGeometry(.48, .003, .48), foldMatAccent);
-        glowStrip.position.set(FOLD_X, FOLD_Y + .013, FOLD_Z);
-        scene.add(glowStrip);
-        // Accent point light on station
-        const stLight = new THREE.PointLight(0x0ea5e9, .8, 1.5);
-        stLight.position.set(FOLD_X, FOLD_Y + .3, FOLD_Z);
-        scene.add(stLight);
+        // Top cross bars
+        const barM = new THREE.MeshStandardMaterial({ color: 0x2a4060, metalness: .85, roughness: .25 });
+        const tbar1 = new THREE.Mesh(new THREE.BoxGeometry(.57, .02, .02), barM);
+        tbar1.position.set(FSX, TTOP + .35 + FSY, FSZ + .24); scene.add(tbar1);
+        const tbar2 = new THREE.Mesh(new THREE.BoxGeometry(.57, .02, .02), barM);
+        tbar2.position.set(FSX, TTOP + .35 + FSY, FSZ - .24); scene.add(tbar2);
+        const tbar3 = new THREE.Mesh(new THREE.BoxGeometry(.02, .02, .5), barM);
+        tbar3.position.set(FSX - .26, TTOP + .35 + FSY, FSZ); scene.add(tbar3);
+        const tbar4 = new THREE.Mesh(new THREE.BoxGeometry(.02, .02, .5), barM);
+        tbar4.position.set(FSX + .26, TTOP + .35 + FSY, FSZ); scene.add(tbar4);
 
-        // ── ZONE LABELS on table ──────────────────────────────────────
-        // Visual markers for zones
+        // Bottom folder arms (4 flap pushers)
+        const flapM = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, metalness: .7, roughness: .3, emissive: 0x0ea5e9, emissiveIntensity: .15 });
+        // Front/back flap pusher
+        let flapF, flapB, flapL, flapR;
+        flapF = new THREE.Mesh(new THREE.BoxGeometry(.45, .012, .06), flapM);
+        flapF.position.set(FSX, TTOP + .015 + FSY, FSZ + .2); scene.add(flapF);
+        flapB = new THREE.Mesh(new THREE.BoxGeometry(.45, .012, .06), flapM);
+        flapB.position.set(FSX, TTOP + .015 + FSY, FSZ - .2); scene.add(flapB);
+        flapL = new THREE.Mesh(new THREE.BoxGeometry(.06, .012, .35), flapM);
+        flapL.position.set(FSX - .22, TTOP + .015 + FSY, FSZ); scene.add(flapL);
+        flapR = new THREE.Mesh(new THREE.BoxGeometry(.06, .012, .35), flapM);
+        flapR.position.set(FSX + .22, TTOP + .015 + FSY, FSZ); scene.add(flapR);
+
+        // Glow strip on base
+        const gsM = new THREE.MeshBasicMaterial({ color: 0x0ea5e9, transparent: true, opacity: .5 });
+        const gs = new THREE.Mesh(new THREE.PlaneGeometry(.48, .42), gsM);
+        gs.rotation.x = -Math.PI / 2; gs.position.set(FSX, TTOP + .014 + FSY, FSZ); scene.add(gs);
+
+        // ═══════════════════════════════════════════════════════════════
+        // ZONE MARKERS
+        // ═══════════════════════════════════════════════════════════════
         const ZONES = {
-            A1: { x: -.32, z: -.32 }, A2: { x: 0, z: -.32 }, A3: { x: .32, z: -.32 },
-            B1: { x: -.32, z: .18 }, B2: { x: 0, z: .18 }, B3: { x: .32, z: .18 },
+            A1: { x: -.3, z: -.3 }, A2: { x: 0, z: -.3 }, A3: { x: .3, z: -.3 },
+            B1: { x: -.3, z: .1 }, B2: { x: 0, z: .1 }, B3: { x: .3, z: .1 },
         };
         const zoneMeshes = {};
         Object.entries(ZONES).forEach(([k, v]) => {
             const m = new THREE.Mesh(
                 new THREE.PlaneGeometry(.22, .18),
-                new THREE.MeshBasicMaterial({ color: 0x1e3a5f, transparent: true, opacity: .4, side: THREE.DoubleSide })
+                new THREE.MeshBasicMaterial({ color: 0x1e3a5f, transparent: true, opacity: .35, side: THREE.DoubleSide })
             );
             m.rotation.x = -Math.PI / 2;
-            m.position.set(v.x, TABLE_TOP + .002, v.z);
-            m.userData.key = k;
-            scene.add(m);
-            zoneMeshes[k] = m;
+            m.position.set(v.x, TTOP + .003, v.z);
+            scene.add(m); zoneMeshes[k] = m;
         });
 
-        // ── UR3 ARM ───────────────────────────────────────────────────
-        const RX = 0, RZ = -.05, RY = TABLE_TOP;
+        // ═══════════════════════════════════════════════════════════════
+        // UR3 ARM — correct joint rotation axes
+        // UR3 joint convention:
+        //   J0 (Base):     rotates around world Y  → pan left/right
+        //   J1 (Shoulder): rotates around local Z  → pitch arm forward/back
+        //   J2 (Elbow):    rotates around local Z  → bend elbow
+        //   J3 (Wrist1):   rotates around local Z  → pitch wrist
+        //   J4 (Wrist2):   rotates around local Y  → yaw tool
+        //   J5 (Wrist3):   rotates around local Z  → roll tool
+        // ═══════════════════════════════════════════════════════════════
+        const RX = 0, RZ = -0.08;
+        const mDark = new THREE.MeshStandardMaterial({ color: 0x101827, roughness: .5, metalness: .75 });
+        const mBlue = new THREE.MeshStandardMaterial({ color: 0x1d4ed8, roughness: .22, metalness: .88 });
+        const mJnt = new THREE.MeshStandardMaterial({ color: 0x2d3b4a, roughness: .3, metalness: .9 });
+        const mGlw = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x1d4ed8, emissiveIntensity: .7, roughness: .15, metalness: .9 });
+        const mBlk = new THREE.MeshStandardMaterial({ color: 0x080e18, roughness: .95 });
+        const mRub = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: .98 });
 
-        const mDark = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: .4, metalness: .75 });
-        const mBlue = new THREE.MeshStandardMaterial({ color: 0x1d4ed8, roughness: .25, metalness: .85 });
-        const mJoint = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: .3, metalness: .9 });
-        const mGlow = new THREE.MeshStandardMaterial({ color: 0x60a5fa, emissive: 0x1d4ed8, emissiveIntensity: .6, roughness: .2, metalness: .9 });
-        const mSuction = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: .95 });
+        function cyl(rt, rb, h, s, m) { return new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, s), m); }
+        function bx(w, h, d, m) { return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); }
+        function tor(R, r, s, m) { return new THREE.Mesh(new THREE.TorusGeometry(R, r, 8, s), m); }
 
-        function cyl(rt, rb, h, seg, mat) { return new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat); }
-        function box(w, h, d, mat) { return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); }
-
-        // J0 = base group (rotate Y = pan left/right)
-        const J0 = new THREE.Group(); J0.position.set(RX, RY, RZ);
-
-        // Base cylinder
-        const baseCyl = cyl(.072, .085, .09, 24, mJoint); baseCyl.position.y = .045; J0.add(baseCyl);
-        const baseRing = cyl(.068, .068, .016, 24, mGlow); baseRing.position.y = .085; J0.add(baseRing);
-
-        // J1 = shoulder joint group (rotate X = tilt forward/back)
-        const J1 = new THREE.Group(); J1.position.y = .09; J0.add(J1);
-        const shJoint = cyl(.058, .058, .1, 20, mJoint); shJoint.rotation.z = Math.PI / 2; J1.add(shJoint);
-
-        // J2 = upper arm (rotates X at shoulder)
-        const J2 = new THREE.Group(); J1.add(J2);
-        const upperArm = box(.042, .248, .042, mBlue); upperArm.position.y = .124; J2.add(upperArm);
-        const elbowJoint = cyl(.052, .052, .065, 20, mJoint); elbowJoint.rotation.z = Math.PI / 2; elbowJoint.position.y = .248; J2.add(elbowJoint);
-
-        // J3 = forearm (rotates X at elbow)
-        const J3 = new THREE.Group(); J3.position.y = .248; J2.add(J3);
-        const forearm = box(.036, .215, .036, mBlue); forearm.position.y = .108; J3.add(forearm);
-        const w1Joint = cyl(.042, .042, .055, 20, mGlow); w1Joint.rotation.z = Math.PI / 2; w1Joint.position.y = .215; J3.add(w1Joint);
-
-        // J4 = wrist1 (rotates X)
-        const J4 = new THREE.Group(); J4.position.y = .215; J3.add(J4);
-        const w1Link = box(.032, .09, .032, mDark); w1Link.position.y = .045; J4.add(w1Link);
-        const w2Joint = cyl(.036, .036, .048, 20, mGlow); w2Joint.rotation.x = Math.PI / 2; w2Joint.position.y = .09; J4.add(w2Joint);
-
-        // J5 = wrist2 (rotates Y)
-        const J5 = new THREE.Group(); J5.position.y = .09; J4.add(J5);
-        const w2Link = box(.032, .09, .032, mDark); w2Link.position.y = .045; J5.add(w2Link);
-
-        // J6 = end effector
-        const J6 = new THREE.Group(); J6.position.y = .09; J5.add(J6);
-        const eeRod = cyl(.012, .012, .05, 12, mDark); eeRod.position.y = .025; J6.add(eeRod);
-        const suctionCup = cyl(.032, .04, .012, 20, mSuction); suctionCup.position.y = .056; J6.add(suctionCup);
-        // Vacuum indicator ring
-        const vacRing = cyl(.03, .03, .003, 20, mGlow); vacRing.position.y = .063; J6.add(vacRing);
-        const suctionGlow = new THREE.PointLight(0x60a5fa, 0, .4); suctionGlow.position.y = .06; J6.add(suctionGlow);
-
+        // BASE PLATFORM (J0 group — rotates Y)
+        const J0 = new THREE.Group(); J0.position.set(RX, TTOP, RZ);
         scene.add(J0);
+        const base = cyl(.08, .09, .09, 32, mJnt); base.position.y = .045; J0.add(base);
+        const baseRing = cyl(.07, .07, .016, 32, mGlw); baseRing.position.y = .088; J0.add(baseRing);
+        // Base glow rim, slightly inset
+        const baseRim = cyl(.062, .062, .025, 32, new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x3b82f6, emissiveIntensity: 1, roughness: .1 }));
+        baseRim.position.y = .077; J0.add(baseRim);
 
-        // ── BOX ───────────────────────────────────────────────────────
-        const BW = .25, BD = .17, BH = .012; // flat cardboard (25×17cm, 1.2cm thick)
-        const cardMat = new THREE.MeshStandardMaterial({ color: 0xe07b20, roughness: .85 });
-        const cardTop = new THREE.MeshStandardMaterial({ color: 0xc96d18, roughness: .85 });
-        const lineMat = new THREE.MeshBasicMaterial({ color: 0x7c3d0c });
-        // 3D folded box material
-        const foldedMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: .8 });
-        const foldedInner = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: .85 });
+        // SHOULDER (J1 — at top of base, contains J2 which rotates Z)
+        const J1 = new THREE.Group(); J1.position.y = .09; J0.add(J1);
+        // Shoulder housing (bury in housing)
+        const shHousing = cyl(.064, .064, .11, 20, mJnt); shHousing.rotation.z = Math.PI / 2; J1.add(shHousing);
+        // Shoulder caps
+        [-1, 1].forEach(s => {
+            const c = cyl(.062, .062, .012, 20, mGlw); c.rotation.z = Math.PI / 2; c.position.x = s * .058; J1.add(c);
+        });
 
-        let boxGroup = null;
-        let boxWorldPos = new THREE.Vector3();
-        let boxPlaced = false;
-        let selectedZone = null;
-        let isRunning = false;
-        let foldedBox = null;
+        // J2 group (rotates Z = shoulder pitch)
+        const J2 = new THREE.Group(); J1.add(J2);
+        // Upper arm body
+        const uArm = bx(.048, .25, .048, mBlue); uArm.position.y = .125; J2.add(uArm);
+        // Ribbing detail
+        for (let y = .05; y < .24; y += .055) {
+            const rib = bx(.052, .008, .054, mJnt); rib.position.y = y; J2.add(rib);
+        }
+        // Elbow joint housing
+        const elbowH = cyl(.058, .058, .105, 20, mJnt); elbowH.rotation.z = Math.PI / 2; elbowH.position.y = .25; J2.add(elbowH);
+        [-1, 1].forEach(s => {
+            const c = cyl(.056, .056, .012, 20, mGlw); c.rotation.z = Math.PI / 2; c.position.set(s * .058, .25, 0); J2.add(c);
+        });
 
-        function buildFlatBox(pos) {
-            if (boxGroup) { scene.remove(boxGroup); boxGroup = null; }
-            const g = new THREE.Group();
-            // Main flat cardboard sheet
-            const sheet = new THREE.Mesh(new THREE.BoxGeometry(BW, BH, BD), cardMat);
-            g.add(sheet);
-            // Fold crease lines on top face
-            const creaseMat = new THREE.MeshBasicMaterial({ color: 0x8b4513 });
+        // J3 group (rotates Z = elbow)
+        const J3 = new THREE.Group(); J3.position.y = .25; J2.add(J3);
+        const fArm = bx(.04, .218, .04, mBlue); fArm.position.y = .109; J3.add(fArm);
+        for (let y = .04; y < .21; y += .055) {
+            const rib = bx(.044, .007, .046, mJnt); rib.position.y = y; J3.add(rib);
+        }
+        const w1H = cyl(.05, .05, .095, 20, mJnt); w1H.rotation.z = Math.PI / 2; w1H.position.y = .218; J3.add(w1H);
+        [-1, 1].forEach(s => {
+            const c = cyl(.048, .048, .012, 20, mGlw); c.rotation.z = Math.PI / 2; c.position.set(s * .05, .218, 0); J3.add(c);
+        });
+
+        // J4 group (rotates Z = wrist 1)
+        const J4 = new THREE.Group(); J4.position.y = .218; J3.add(J4);
+        const w1Lnk = bx(.036, .09, .036, mDark); w1Lnk.position.y = .045; J4.add(w1Lnk);
+        const w2H = cyl(.042, .042, .055, 20, mGlw); w2H.rotation.x = Math.PI / 2; w2H.position.y = .09; J4.add(w2H);
+
+        // J5 group (rotates Y = wrist 2)
+        const J5 = new THREE.Group(); J5.position.y = .09; J4.add(J5);
+        const w2Lnk = bx(.036, .09, .036, mDark); w2Lnk.position.y = .045; J5.add(w2Lnk);
+        const w3H = cyl(.036, .036, .045, 20, mGlw); w3H.position.y = .09; J5.add(w3H);
+
+        // J6 group (rotates Z = wrist 3 / tool)
+        const J6 = new THREE.Group(); J6.position.y = .09; J5.add(J6);
+        // Tool flange
+        const flange = cyl(.04, .04, .022, 20, mJnt); flange.position.y = .011; J6.add(flange);
+        // Suction gripper body
+        const gripBody = cyl(.032, .038, .06, 16, mDark); gripBody.position.y = .05; J6.add(gripBody);
+        // Suction mounting plate
+        const sPlate = cyl(.052, .052, .012, 20, mJnt); sPlate.position.y = .085; J6.add(sPlate);
+        // 4 suction cups arranged in 2×2 grid
+        const cupM = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: .98 });
+        const cupLipM = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: .95 });
+        [[-.016, -.016], [.016, -.016], [-.016, .016], [.016, .016]].forEach(([ox, oz]) => {
+            // cup rod
+            const rod = cyl(.005, .005, .018, 8, mDark); rod.position.set(ox, .1, oz); J6.add(rod);
+            // cup disc
+            const disc = cyl(.013, .015, .006, 16, cupM); disc.position.set(ox, .112, oz); J6.add(disc);
+            // cup lip (torus outline)
+            const lip = tor(.012, .002, 16, cupLipM); lip.rotation.x = Math.PI / 2; lip.position.set(ox, .114, oz); J6.add(lip);
+        });
+        // Vacuum tube hoses (decorative)
+        [-1, 1].forEach(s => {
+            const hose = cyl(.004, .004, .025, 8, new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: .9 }));
+            hose.position.set(s * .04, .068, 0); hose.rotation.z = s * .5; J6.add(hose);
+        });
+        // Suction active glow
+        const sGlow = new THREE.PointLight(0x60a5fa, 0, .6); sGlow.position.y = .115; J6.add(sGlow);
+
+        // ═══════════════════════════════════════════════════════════════
+        // CARDBOARD BOX BLANK
+        // Real corrugated blank = flat folded form, multiple panels connected
+        // Width 25cm, Depth 17cm, Height 9cm -> 0.25×0.17×0.09m
+        // Flat state: 4 panels in one plane, compressed
+        // Opening: side panels rotate 90° up (like a cross unfolding upward)
+        // ═══════════════════════════════════════════════════════════════
+        const BW = 0.25, BD = 0.17, BH = 0.09; // box dimensions
+        const BTHK = 0.008; // cardboard thickness
+
+        const corrM = new THREE.MeshStandardMaterial({ color: 0xd17a1e, roughness: .88 });
+        const corrDark = new THREE.MeshStandardMaterial({ color: 0xb06010, roughness: .88 });
+        const corrInner = new THREE.MeshStandardMaterial({ color: 0xc07018, roughness: .9 });
+
+        let boxRoot = null; // Group containing the full box blank assembly
+        let panelF = null, panelB = null, panelL = null, panelR = null; // four side panels
+        let panelFBottom = null, panelBBottom = null; // bottom flaps
+        let boxOpened = false; // whether box is in open tube state
+        let boxFolded = false; // whether bottom is folded
+
+        function buildBoxBlank(pos) {
+            if (boxRoot) { scene.remove(boxRoot); boxRoot = null; }
+
+            boxRoot = new THREE.Group();
+
+            // ─ FLAT FOLDED STATE ─
+            // Two long panels (BW×BTHK flat = 25×0.8cm flat on table)
+            // Two short panels folded on top (looks like a thick flat rectangle ~42×17cm)
+            // We represent it as a thick flat rectangle with visible edge lines
+
+            // Main flat base (the "spine" bottom panel, BW×BD size)
+            const spine = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK, BD), corrM); spine.position.y = 0; boxRoot.add(spine);
+            // Duplicate sitting on top (simulates entire folded blank stack)
+            const spine2 = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK, BD), corrDark); spine2.position.y = BTHK * 1.5; boxRoot.add(spine2);
+            // Thin layer (folded panel sitting on top)
+            const spine3 = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK * .5, BD), corrInner); spine3.position.y = BTHK * 2.5; boxRoot.add(spine3);
+
+            // Visible edge strips showing fold line separation
+            const edgeM = new THREE.MeshBasicMaterial({ color: 0x8b4000 });
+            const el = new THREE.Mesh(new THREE.BoxGeometry(.003, BTHK * 4, BD), edgeM); el.position.set(-BW / 2 + .001, BTHK, 0); boxRoot.add(el);
+            const er = new THREE.Mesh(new THREE.BoxGeometry(.003, BTHK * 4, BD), edgeM); er.position.set(BW / 2 - .001, BTHK, 0); boxRoot.add(er);
+            const ef = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK * 4, .003), edgeM); ef.position.set(0, BTHK, -BD / 2 + .001); boxRoot.add(ef);
+            const eb = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK * 4, .003), edgeM); eb.position.set(0, BTHK, BD / 2 - .001); boxRoot.add(eb);
+            // Crease lines on top face
             [-.08, .0, .08].forEach(x => {
-                const c = new THREE.Mesh(new THREE.BoxGeometry(.003, BH + .001, BD), creaseMat);
-                c.position.x = x; g.add(c);
+                const cr = new THREE.Mesh(new THREE.BoxGeometry(.002, BTHK * 4, BD), edgeM); cr.position.x = x; boxRoot.add(cr);
             });
-            [-0.06, .06].forEach(z => {
-                const c = new THREE.Mesh(new THREE.BoxGeometry(BW, BH + .001, .003), creaseMat);
-                c.position.z = z; g.add(c);
-            });
-            g.position.copy(pos);
-            g.castShadow = true; g.receiveShadow = true;
-            boxGroup = g; scene.add(g);
-            boxWorldPos.copy(pos);
+
+            // ─ SIDE PANELS (hinged, animate open) ─
+            // Left panel (hinge at left edge of spine)
+            panelL = new THREE.Group(); panelL.position.set(-BW / 2, BTHK * 2, 0); boxRoot.add(panelL);
+            const panelLm = new THREE.Mesh(new THREE.BoxGeometry(BTHK, BH * 1, BD), corrM);
+            panelLm.position.set(-BTHK / 2, BH / 2, 0); panelL.add(panelLm);
+
+            // Right panel (hinge at right edge of spine)
+            panelR = new THREE.Group(); panelR.position.set(BW / 2, BTHK * 2, 0); boxRoot.add(panelR);
+            const panelRm = new THREE.Mesh(new THREE.BoxGeometry(BTHK, BH * 1, BD), corrM);
+            panelRm.position.set(BTHK / 2, BH / 2, 0); panelR.add(panelRm);
+
+            // Front panel (hinge at front edge)
+            panelF = new THREE.Group(); panelF.position.set(0, BTHK * 2, -BD / 2); boxRoot.add(panelF);
+            const panelFm = new THREE.Mesh(new THREE.BoxGeometry(BW + BTHK * 2, BH * 1, BTHK), corrDark);
+            panelFm.position.set(0, BH / 2, -BTHK / 2); panelF.add(panelFm);
+
+            // Back panel (hinge at back edge)
+            panelB = new THREE.Group(); panelB.position.set(0, BTHK * 2, BD / 2); boxRoot.add(panelB);
+            const panelBm = new THREE.Mesh(new THREE.BoxGeometry(BW + BTHK * 2, BH * 1, BTHK), corrDark);
+            panelBm.position.set(0, BH / 2, BTHK / 2); panelB.add(panelBm);
+
+            // Bottom flaps (fold inward at station)
+            panelFBottom = new THREE.Group();
+            panelFBottom.position.set(0, 0, -BD / 2); boxRoot.add(panelFBottom);
+            const bflp = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK, BD * .45), corrM);
+            bflp.position.set(0, 0, BD * .225); panelFBottom.add(bflp);
+
+            panelBBottom = new THREE.Group();
+            panelBBottom.position.set(0, 0, BD / 2); boxRoot.add(panelBBottom);
+            const bblp = new THREE.Mesh(new THREE.BoxGeometry(BW, BTHK, BD * .45), corrDark);
+            bblp.position.set(0, 0, -BD * .225); panelBBottom.add(bblp);
+
+            // Initialize side panels flat (folded against spine)
+            panelL.rotation.z = Math.PI / 2;  // lying flat (rotated against it)
+            panelR.rotation.z = -Math.PI / 2;
+            panelF.rotation.x = -Math.PI / 2;
+            panelB.rotation.x = Math.PI / 2;
+            panelFBottom.rotation.x = 0;
+            panelBBottom.rotation.x = 0;
+
+            boxRoot.position.copy(pos);
+            boxRoot.castShadow = true; boxRoot.receiveShadow = true;
+            scene.add(boxRoot);
+            boxOpened = false; boxFolded = false;
         }
 
-        function buildFoldedBox(pos) {
-            if (foldedBox) { scene.remove(foldedBox); foldedBox = null; }
-            const g = new THREE.Group();
-            // Box body (17×25×9 cm → 0.17×0.25×0.09 m)
-            const bw = .25, bh = .09, bd = .17;
-            const outer = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), foldedMat);
-            outer.position.y = bh / 2;
-            g.add(outer);
-            // Slightly darker inner face visible on top
-            const innerTop = new THREE.Mesh(new THREE.PlaneGeometry(bw - .01, bd - .01), foldedInner);
-            innerTop.rotation.x = -Math.PI / 2;
-            innerTop.position.y = bh + .001;
-            g.add(innerTop);
-            // Fold crease lines on top
-            const cr = new THREE.MeshBasicMaterial({ color: 0x7c4a00 });
-            const cl1 = new THREE.Mesh(new THREE.BoxGeometry(.002, bh + .002, bd), cr);
-            g.add(cl1);
-            g.position.copy(pos);
-            g.castShadow = true;
-            foldedBox = g; scene.add(g);
+        function animateBoxOpen(t) {
+            // t: 0=flat, 1=fully open tube
+            if (!panelL) return;
+            panelL.rotation.z = Math.PI / 2 - t * Math.PI / 2;   // from flat → 0
+            panelR.rotation.z = -Math.PI / 2 + t * Math.PI / 2;   // from flat → 0
+            panelF.rotation.x = -Math.PI / 2 + t * Math.PI / 2;
+            panelB.rotation.x = Math.PI / 2 - t * Math.PI / 2;
         }
 
-        // ── ZONE PLACEMENT ────────────────────────────────────────────
-        window.placeBox = (zone) => {
-            if (isRunning) return;
-            // Update zone button styles
-            document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
-            document.getElementById('z-' + zone).classList.add('selected');
-            // Reset zone highlight colors
-            Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
-            zoneMeshes[zone].material.color.set(0x1d4ed8);
-            selectedZone = zone;
+        function animateBottomFold(t) {
+            // t: 0=open, 1=folded shut
+            if (!panelFBottom) return;
+            panelFBottom.rotation.x = -t * Math.PI / 2;
+            panelBBottom.rotation.x = t * Math.PI / 2;
+        }
 
-            const z = ZONES[zone];
-            buildFlatBox(new THREE.Vector3(z.x, TABLE_TOP + BH / 2, z.z));
-            document.getElementById('box-sts').textContent = 'วางแล้ว ✓';
-            document.getElementById('box-sts').className = 'blue';
-            document.getElementById('btn-start').disabled = false;
-            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-box"></i><span>วางกล่องที่ zone ' + zone + ' แล้ว — กด Start เพื่อเริ่ม</span>';
-            boxPlaced = true;
-        };
-
-        // ── ANIMATION ─────────────────────────────────────────────────
-        // Joint angle names: j0=base Y, j1=shoulder X, j2=elbow X, j3=wrist1 X, j4=wrist2 Y, j5=ee Z
-        const HOME = { j0: 0, j1: -0.35, j2: 1.0, j3: -0.7, j4: 0, j5: 0 };
+        // ═══════════════════════════════════════════════════════════════
+        // JOINT ANGLE STATE & APPLICATION
+        // Correct UR3 axis:
+        //   j0 → J0.rotation.y
+        //   j1 → J2.rotation.z  (shoulder, Z in local frame = forward pitch)
+        //   j2 → J3.rotation.z  (elbow)
+        //   j3 → J4.rotation.z  (wrist1)
+        //   j4 → J5.rotation.y  (wrist2, perpendicular to arm)
+        //   j5 → J6.rotation.z  (tool roll)
+        // ═══════════════════════════════════════════════════════════════
+        const HOME = { j0: 0, j1: -1.2, j2: 1.5, j3: -1.3, j4: 0, j5: 0 };
         let cur = { ...HOME }, tgt = { ...HOME }, frm = { ...HOME };
         let animT = 0, animDur = 0, onDone = null;
+        let boxOpenT = 0, boxOpenDur = 0, boxOpenDone = null;
+        let foldT = 0, foldDur = 0, foldDone = null;
 
         function applyAngles(a) {
             J0.rotation.y = a.j0;
-            J2.rotation.x = a.j1;
-            J3.rotation.x = a.j2;
-            J4.rotation.x = a.j3;
-            J5.rotation.y = a.j4;
-            J6.rotation.z = a.j5;
+            J2.rotation.z = a.j1;   // shoulder pitch around local Z
+            J3.rotation.z = a.j2;   // elbow
+            J4.rotation.z = a.j3;   // wrist1
+            J5.rotation.y = a.j4;   // wrist2 (perpendicular)
+            J6.rotation.z = a.j5;   // tool roll
         }
         applyAngles(HOME);
 
         function ease(t) { return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
-        function anim(target, dur, cb) {
-            frm = { ...cur }; tgt = { ...target }; animT = 0; animDur = dur; onDone = cb;
-        }
+        function anim(target, dur, cb) { frm = { ...cur }; tgt = { ...target }; animT = 0; animDur = dur; onDone = cb; }
 
-        function setPhase(p) {
+        function setPhaseUI(p) {
             for (let i = 0; i < 5; i++) {
                 const el = document.getElementById('p' + i);
-                el.className = 'ph' + (i < p ? ' done' : i === p ? ' act' : '');
+                el.className = 'ph' + (i < p ? ' d' : i === p ? ' a' : '');
             }
-            document.getElementById('ph-cur').textContent = p < 5 ? ['APPROACH', 'PICK', 'LIFT', 'TRANSIT', 'FOLD'][p] : 'DONE ✓';
+            document.getElementById('phc').textContent = p >= 0 && p < 5 ? ['APPROACH', 'PICK', 'LIFT+OPEN', 'TRANSIT', 'FOLD'][p] : 'DONE ✓';
         }
 
-        function getBaseAngle(bx, bz) {
-            return Math.atan2(bx - RX, -(bz - RZ));
-        }
+        // Simple IK for base angle
+        function baseAngle(bx, bz) { return Math.atan2(bx - RX, -(bz - RZ)); }
 
-        window.startSimulation = () => {
+        // ═══════════════════════════════════════════════════════════════
+        // BOX PLACEMENT
+        // ═══════════════════════════════════════════════════════════════
+        let boxPos = new THREE.Vector3();
+        let boxPlaced = false, isRunning = false, selZone = null;
+
+        window.placeBox = (zone) => {
+            if (isRunning) return;
+            document.querySelectorAll('.zb').forEach(b => b.classList.remove('sel'));
+            document.getElementById('z-' + zone).classList.add('sel');
+            Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
+            zoneMeshes[zone].material.color.set(0x1d4ed8);
+            selZone = zone;
+            const zd = ZONES[zone];
+            boxPos.set(zd.x, TTOP + BTHK / 2, zd.z);
+            buildBoxBlank(boxPos.clone());
+            document.getElementById('bsts').textContent = 'วางแล้ว ✓';
+            document.getElementById('bsts').className = 'v blu';
+            document.getElementById('btn-st').disabled = false;
+            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-box"></i><span>วางกล่องที่ ' + zone + ' — กด Start เพื่อเริ่ม</span>';
+            boxPlaced = true;
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // PICK & PLACE SEQUENCE
+        // ═══════════════════════════════════════════════════════════════
+        function run() {
             if (!boxPlaced || isRunning) return;
-            isRunning = true;
-            ctrl.enabled = false;
-            document.getElementById('btn-start').disabled = true;
+            isRunning = true; ctrl.enabled = false;
+            document.getElementById('btn-st').disabled = true;
             document.getElementById('sts').textContent = 'RUNNING';
-            document.getElementById('sts').className = 'run';
+            document.getElementById('sts').className = 'v run';
 
-            const bx = boxWorldPos.x, bz = boxWorldPos.z;
-            const j0 = getBaseAngle(bx, bz);
-            // Horizontal dist from robot base on table plane
-            const dx = bx - RX, dz = bz - RZ;
-            const dist = Math.sqrt(dx * dx + dz * dz);
+            const bx = boxPos.x, bz = boxPos.z;
+            const j0a = baseAngle(bx, bz);
 
-            // Phase 0: Go to position ABOVE box (arm extended out, not down yet)
-            setPhase(0);
-            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-arrows-to-dot"></i><span>ขยับแขนไปด้านบนกล่อง…</span>';
-            anim({ j0, j1: -0.1, j2: 0.9, j3: -0.9, j4: 0, j5: 0 }, 2.5, () => {
-                // Phase 1: PICK - bend down dramatically to table level
-                setPhase(1);
-                document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-hand"></i><span>โค้งลงดูดกล่อง…</span>';
-                anim({ j0, j1: 0.65, j2: 1.35, j3: -1.7, j4: 0, j5: 0 }, 2.0, () => {
-                    // Attach box
-                    suctionGlow.intensity = 2.5;
-                    if (boxGroup) {
-                        J6.attach(boxGroup); // keep world position
-                        // Flatten rotation relative to J6
-                        boxGroup.rotation.set(0, 0, 0);
-                        boxGroup.position.set(0, .068, 0);
+            // PHASE 0: Approach (above box, arm extended outward)
+            setPhaseUI(0);
+            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-arrows-to-dot"></i><span>Phase 1: เข้าหากล่อง…</span>';
+            // Shoulder forward, elbow partially bent, wrist pitched down to keep tool vertical
+            anim({ j0: j0a, j1: -0.2, j2: 1.1, j3: -1.8, j4: 0, j5: 0 }, 2.8, () => {
+                // PHASE 1: PICK — bend down to contact table surface
+                setPhaseUI(1);
+                document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-hand"></i><span>Phase 2: โค้งลงดูดกล่อง…</span>';
+                // Shoulder more forward, elbow bent more to bring arm DOWN toward table
+                anim({ j0: j0a, j1: 0.55, j2: 1.55, j3: -2.0, j4: 0, j5: 0 }, 2.2, () => {
+                    sGlow.intensity = 3;
+                    // Attach box to end-effector
+                    if (boxRoot) {
+                        const worldPos = new THREE.Vector3(); boxRoot.getWorldPosition(worldPos);
+                        J6.attach(boxRoot);
+                        boxRoot.position.set(0, 0.125, 0);
+                        boxRoot.rotation.set(0, 0, 0);
                     }
-                    // Phase 2: LIFT
-                    setPhase(2);
-                    document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-arrow-up"></i><span>ยกกล่องขึ้น…</span>';
-                    anim({ j0, j1: -0.2, j2: 0.85, j3: -0.75, j4: 0, j5: 0 }, 1.8, () => {
-                        // Phase 3: TRANSIT to folding station
-                        setPhase(3);
-                        document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-rotate-right"></i><span>เคลื่อนไปแท่นพับ…</span>';
-                        const j0f = getBaseAngle(FOLD_X, FOLD_Z);
-                        anim({ j0: j0f, j1: -0.1, j2: 0.9, j3: -0.85, j4: 0, j5: 0 }, 2.5, () => {
-                            // Phase 4: PLACE (lower down to station)
-                            setPhase(4);
-                            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-box-open"></i><span>วางและพับกล่อง…</span>';
-                            anim({ j0: j0f, j1: 0.5, j2: 1.25, j3: -1.55, j4: 0, j5: 0 }, 2.0, () => {
+                    // PHASE 2: LIFT and simultaneously OPEN the box
+                    setPhaseUI(2);
+                    document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-arrow-up"></i><span>Phase 3: ยกกล่องขึ้น — กล่องเปิด…</span>';
+                    boxOpenDur = 2.0; boxOpenT = 0;
+                    boxOpenDone = null; // will be driven in animate loop
+
+                    anim({ j0: j0a, j1: -0.35, j2: 1.0, j3: -1.5, j4: 0, j5: 0 }, 2.5, () => {
+                        boxOpened = true;
+                        // PHASE 3: TRANSIT to folding station
+                        setPhaseUI(3);
+                        document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-rotate-right"></i><span>Phase 4: เคลื่อนไปแท่นพับ…</span>';
+                        const j0f = baseAngle(FSX, FSZ);
+                        anim({ j0: j0f, j1: -0.15, j2: 1.05, j3: -1.6, j4: 0, j5: 0 }, 2.5, () => {
+                            // PHASE 4: Lower to station + fold bottom
+                            setPhaseUI(4);
+                            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-box-open"></i><span>Phase 5: วางและพับก้น…</span>';
+                            anim({ j0: j0f, j1: 0.45, j2: 1.5, j3: -1.9, j4: 0, j5: 0 }, 2.0, () => {
                                 // Release
-                                suctionGlow.intensity = 0;
-                                if (boxGroup) {
-                                    scene.attach(boxGroup);
-                                    scene.remove(boxGroup); boxGroup = null;
+                                sGlow.intensity = 0;
+                                if (boxRoot) {
+                                    scene.attach(boxRoot);
+                                    boxRoot.position.set(FSX, TTOP + BTHK / 2, FSZ);
+                                    boxRoot.rotation.set(0, 0, 0);
                                 }
-                                // Show 3D folded box
-                                buildFoldedBox(new THREE.Vector3(FOLD_X, FOLD_Y + .001, FOLD_Z));
-                                // Return home
+                                // Animate bottom fold
+                                foldDur = 1.8; foldT = 0; foldDone = null;
+                                // Return to home
                                 setTimeout(() => {
-                                    anim(HOME, 2.2, () => {
+                                    anim(HOME, 2.5, () => {
                                         isRunning = false; ctrl.enabled = true; boxPlaced = false;
-                                        selectedZone = null;
                                         document.getElementById('sts').textContent = 'DONE ✓';
-                                        document.getElementById('sts').className = 'ok';
-                                        document.getElementById('box-sts').textContent = 'พับแล้ว ✓';
-                                        document.getElementById('box-sts').className = 'ok';
-                                        document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-check-circle"></i><span>เสร็จสิ้น! กล่องถูกพับแล้ว — กด Reset เพื่อเริ่มใหม่</span>';
-                                        document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+                                        document.getElementById('sts').className = 'v ok';
+                                        document.getElementById('bsts').textContent = 'พับแล้ว ✓';
+                                        document.getElementById('bsts').className = 'v ok';
+                                        document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-check-circle"></i><span>เสร็จ! กด Reset เพื่อเริ่มใหม่</span>';
+                                        document.querySelectorAll('.zb').forEach(b => b.classList.remove('sel'));
                                         Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
-                                        setPhase(5);
+                                        setPhaseUI(5);
                                     });
-                                }, 600);
+                                }, 800);
                             });
                         });
                     });
                 });
             });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // CAMERA PRESETS
+        // ═══════════════════════════════════════════════════════════════
+        const CAMS = {
+            iso: [[1.5, 1.2, 2.0], [0, .45, 0]],
+            front: [[0, 1.0, 2.5], [0, .45, 0]],
+            side: [[2.5, 1.0, 0], [0, .45, 0]],
+            top: [[0, 3.2, .001], [0, 0, 0]],
+        };
+        let cFrm = new THREE.Vector3(), cTo = new THREE.Vector3(), cTgt = new THREE.Vector3(0, .45, 0), cT = 1;
+        window.setCamera = (n) => {
+            const p = CAMS[n];
+            cFrm.copy(camera.position);
+            cTo.set(...p[0]); cTgt.set(...p[1]); cT = 0;
+            document.querySelectorAll('.cb').forEach(b => b.classList.remove('a'));
+            document.getElementById('cam-' + n)?.classList.add('a');
         };
 
-        // ── BUTTON BINDINGS ───────────────────────────────────────────
-        document.getElementById('btn-start').addEventListener('click', window.startSimulation);
-        document.getElementById('btn-reset').addEventListener('click', () => {
-            if (boxGroup) { scene.remove(boxGroup); boxGroup = null; }
-            if (foldedBox) { scene.remove(foldedBox); foldedBox = null; }
-            // Detach any lingering box from J6
-            while (J6.children.length > 3) J6.remove(J6.children[J6.children.length - 1]);
-            isRunning = false; ctrl.enabled = true; boxPlaced = false; selectedZone = null;
-            suctionGlow.intensity = 0; animDur = 0; animT = 0; cur = { ...HOME };
-            applyAngles(HOME);
-            document.getElementById('sts').textContent = 'IDLE'; document.getElementById('sts').className = 'idle';
-            document.getElementById('ph-cur').textContent = '—';
-            document.getElementById('box-sts').textContent = 'ยังไม่วาง'; document.getElementById('box-sts').className = 'idle';
-            document.getElementById('btn-start').disabled = true;
-            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-table-cells"></i><span>เลือกตำแหน่ง A1-B3 เพื่อวางกล่องกระดาษบนโต๊ะ</span>';
-            document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('selected'));
+        // BUTTONS
+        document.getElementById('btn-st').addEventListener('click', run);
+        document.getElementById('btn-rst').addEventListener('click', () => {
+            if (boxRoot) { scene.remove(boxRoot); boxRoot = null; }
+            while (J6.children.length > 11) J6.remove(J6.children[J6.children.length - 1]);
+            isRunning = false; ctrl.enabled = true; boxPlaced = false; selZone = null;
+            sGlow.intensity = 0; animDur = 0; animT = 0; boxOpenDur = 0; boxOpenT = 0; foldDur = 0; foldT = 0;
+            cur = { ...HOME }; applyAngles(HOME);
+            document.getElementById('sts').textContent = 'IDLE'; document.getElementById('sts').className = 'v idle';
+            document.getElementById('phc').textContent = '—';
+            document.getElementById('bsts').textContent = 'ยังไม่วาง'; document.getElementById('bsts').className = 'v idle';
+            document.getElementById('btn-st').disabled = true;
+            document.getElementById('info-txt').innerHTML = '<i class="fa-solid fa-table-cells"></i><span>เลือก Zone A1–B3 เพื่อวางกล่อง แล้วกด Start</span>';
+            document.querySelectorAll('.zb').forEach(b => b.classList.remove('sel'));
             Object.values(zoneMeshes).forEach(m => m.material.color.set(0x1e3a5f));
-            setPhase(-1);
+            setPhaseUI(-1);
         });
 
-        // ── CAMERA PRESETS ────────────────────────────────────────────
-        const CAM = {
-            iso: [[1.4, 1.1, 1.7], [0, .4, 0]],
-            front: [[0, .9, 2.2], [0, .4, 0]],
-            side: [[2.2, .9, 0], [0, .4, 0]],
-            top: [[0, 3, .001], [0, 0, 0]],
-        };
-        let cFrom = new THREE.Vector3(), cTo = new THREE.Vector3(), cTarget = new THREE.Vector3(0, .4, 0), cT = 1;
-        window.setCamera = (n) => {
-            const p = CAM[n];
-            cFrom.copy(camera.position);
-            cTo.set(...p[0]); cTarget.set(...p[1]); cT = 0;
-            document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('act'));
-            document.getElementById('cam-' + n)?.classList.add('act');
-        };
-
-        // ── MAIN LOOP ─────────────────────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════
+        // MAIN LOOP
+        // ═══════════════════════════════════════════════════════════════
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
             const dt = clock.getDelta();
 
-            // Joint animation
+            // Joint anim
             if (animDur > 0) {
                 animT = Math.min(animT + dt / animDur, 1);
                 const t = ease(animT);
@@ -793,16 +910,31 @@
                 if (animT >= 1) { animDur = 0; if (onDone) { const f = onDone; onDone = null; f(); } }
             }
 
+            // Box open anim (parallel with lift)
+            if (boxOpenDur > 0) {
+                boxOpenT = Math.min(boxOpenT + dt / boxOpenDur, 1);
+                animateBoxOpen(ease(boxOpenT));
+                if (boxOpenT >= 1) boxOpenDur = 0;
+            }
+
+            // Bottom fold anim
+            if (foldDur > 0) {
+                foldT = Math.min(foldT + dt / foldDur, 1);
+                animateBottomFold(ease(foldT));
+                if (foldT >= 1) foldDur = 0;
+            }
+
             // Camera tween
             if (cT < 1) {
                 cT = Math.min(cT + dt * 1.8, 1);
                 const t = ease(cT);
-                camera.position.lerpVectors(cFrom, cTo, t);
-                ctrl.target.lerp(cTarget, .12);
+                camera.position.lerpVectors(cFrm, cTo, t);
+                ctrl.target.lerp(cTgt, .12);
             }
 
-            // Pulse robot light
-            robotLight.intensity = 1.8 + .5 * Math.sin(Date.now() * .003);
+            // Pulse effects
+            roboLight.intensity = 2 + .6 * Math.sin(Date.now() * .003);
+            stLamp.intensity = 2.5 + .3 * Math.sin(Date.now() * .005 + 1);
 
             ctrl.update();
             renderer.render(scene, camera);
